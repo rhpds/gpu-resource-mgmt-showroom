@@ -19,5 +19,10 @@ asciidoc:
   attributes:
     showroom-collection-version: v1.5.2
 
+antora:
+  extensions:
+    - require: '@antora/lunr-extension'
+      index_by_heading: true
+
 output:
   dir: ./www
