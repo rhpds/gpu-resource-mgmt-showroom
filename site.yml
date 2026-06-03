@@ -1,7 +1,7 @@
 ---
 site:
-  title: Showroom Template
-  url: https://github.com/rhpds/showroom_template_nookbag
+  title: "GPU Resource Management on OpenShift"
+  url: https://rhpds.github.io/gpu-resource-mgmt-showroom
   start_page: modules::index.adoc
 
 content:
@@ -11,29 +11,13 @@ content:
 
 ui:
   bundle:
-    # rh-one-2025 | rh-summit-2025
-    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/rh-one-2025/ui-bundle.zip
+    url: https://github.com/rhpds/rhdp_showroom_theme/releases/download/summit-2026/ui-bundle.zip
     snapshot: true
-  supplemental_files:
-    - path: ./content/supplemental-ui
-    - path: ./content/lib
-    - path: .nojekyll
-    - path: ui.yml
-      contents: "static_files: [ .nojekyll ]"
+  supplemental_files: ./content/supplemental-ui
 
-runtime:
-  cache_dir: ./.cache/antora
-
-antora:
-  extensions:
-    # dev-mode: set enabled: true for local development hot-reload
-    - require: ./content/lib/dev-mode.js
-      enabled: false
-
-    # inject-buttons.js: inlines buttons.js + site-extra.css into every page.
-    # Required for solve/validate panels and send-to terminal buttons.
-    # Remove this extension if you don't need E2E buttons.
-    - require: ./content/lib/inject-buttons.js
+asciidoc:
+  attributes:
+    showroom-collection-version: v1.5.2
 
 output:
   dir: ./www

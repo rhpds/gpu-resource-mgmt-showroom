@@ -1,19 +1,17 @@
-* xref:index.adoc[What is Showroom?]
+* xref:index.adoc[Welcome]
 
-.Content Developer Guide
-* xref:quick-start.adoc[Quick Start]
-* xref:content-repo.adoc[Creating a Content Repository]
-* xref:agnosticv-config.adoc[AgnosticV Configuration]
-* xref:ui-config.adoc[UI Configuration]
-* xref:user-data.adoc[User Data and Variables]
-* xref:attribute-example.adoc[Attribute Injection Example]
-* xref:ocp4-role-reference.adoc[OCP4 Role Reference]
-* xref:vm-role-reference.adoc[VM Role Reference]
+.Getting Started
+* xref:getting-connected.adoc[Getting Connected]
 
-.Showroom Developer Guide
-* xref:architecture.adoc[Architecture]
-* xref:deployer.adoc[Showroom Deployer]
-* xref:images.adoc[Showroom Images]
-* xref:nookbag.adoc[Nookbag UI]
-* xref:ocp-integration.adoc[OCP Integration]
-* xref:contributing.adoc[Contributing]
+.Quickstart
+* xref:08-quickstart.adoc[Quickstart: End-to-End Demo]
+
+.Modules
+* xref:02-module-01-fake-gpus.adoc[Module 1: Fake GPUs]
+* xref:03-module-02-gpu-booking.adoc[Module 2: GPU Booking]
+* xref:04-module-03-hardware-profiles.adoc[Module 3: Hardware Profiles]
+* xref:05-module-04-kueue.adoc[Module 4: Kueue]
+* xref:06-module-05-preemption.adoc[Module 5: Preemption]
+
+.Wrap-up
+* xref:07-conclusion.adoc[Conclusion]

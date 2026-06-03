@@ -1,18 +1,20 @@
 name: modules
-title: Showroom Collection
+title: "GPU Resource Management on OpenShift"
 version: ~
 nav:
   - modules/ROOT/nav.adoc
 
 asciidoc:
   attributes:
+    source-highlighter: highlight.js
     experimental: true
     page-pagination: true
-    showroom-collection-version: v1.5.6
-    guid: abc123
-    bastion_public_hostname: bastion.abc123.ocpv00.rhdp.net
-    bastion_ssh_user_name: lab-user
-    bastion_ssh_password: password
-    ssh_user: lab-user
-    openshift_console_url: https://console-openshift-console.apps.cluster-abc123.ocpv00.rhdp.net
-    openshift_cluster_ingress_domain: apps.cluster-abc123.ocpv00.rhdp.net
+    lab_name: "GPU Resource Management on OpenShift"
+    user-admin: admin
+    user-user1: user1
+    user-user2: user2
+    password: "%password%"
+    openshift_api_url: "https://api.cluster.example.com:6443"
+    openshift_console_url: "https://console-openshift-console.apps.cluster.example.com"
+    openshift_ai_url: "https://rh-ai.apps.cluster.example.com"
+    openshift_cluster_ingress_domain: apps.cluster.example.com
