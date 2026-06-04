@@ -77,10 +77,10 @@ You should see the Kueue controller and operator pods.
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get clusterqueues
+oc get clusterqueues -A
 ----
 +
-You should see at least `default`, `unreserved`, and `unreserved-priority` ClusterQueues.
+You should see the `default`, ClusterQueue.
 
 == Verify your namespaces
 
@@ -88,7 +88,7 @@ You should see at least `default`, `unreserved`, and `unreserved-priority` Clust
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get project {user-user1} {user-user2}
+oc get project user-{user-user1} user-{user-user2}
 ----
 +
 You should see the user namespaces `{user-user1}` and `{user-user2}`.
