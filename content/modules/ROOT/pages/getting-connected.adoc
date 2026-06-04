@@ -28,13 +28,12 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-admin} -p {password} --insecure-skip-tls-verify
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user} -p {password}
 ----
 
 . Verify your identity:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc whoami
 ----
@@ -43,16 +42,14 @@ oc whoami
 
 . Check that fake GPU nodes are available:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get nodes -l nvidia.com/gpu.present=true
 ----
 
 . Verify GPU resources are allocatable:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc describe node -l nvidia.com/gpu.present=true | grep -A 10 "Allocatable:"
 ----
@@ -63,16 +60,14 @@ You should see `nvidia.com/gpu`, `nvidia.com/mig-1g.18gb`, `nvidia.com/mig-2g.35
 
 . Check Kueue controller pods:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get pods -n openshift-kueue-operator
 ----
 
 . List the ClusterQueues:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues
 ----

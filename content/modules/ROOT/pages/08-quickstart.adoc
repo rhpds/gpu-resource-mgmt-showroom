@@ -153,8 +153,7 @@ You should see 8 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. 
 
 . Check the Kueue resources:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get lq,cq,workload -A
 ----
@@ -250,8 +249,7 @@ oc login {openshift_api_url} -u {user-2} -p {password}
 
 . Check the Kueue resources:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get lq,cq,workload -A
 ----

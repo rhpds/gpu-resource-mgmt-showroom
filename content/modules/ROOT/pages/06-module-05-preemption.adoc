@@ -83,8 +83,7 @@ oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=60s
 
 . Verify all GPUs are consumed:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueue unreserved -o jsonpath='{.status.flavorsUsage}' | jq .
 ----
@@ -135,8 +134,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 
 . Watch the preemption happen:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get events -A --sort-by='.lastTimestamp' --field-selector reason=Preempted -w
 ----
@@ -145,8 +143,7 @@ Press `Ctrl+C` after you see preemption events. Kueue evicts the unreserved work
 
 . Check the workload status:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get workloads -A -o custom-columns=\
 NAMESPACE:.metadata.namespace,\
@@ -317,8 +314,7 @@ oc -n user-{user-user2} delete deployment gpu-fake-18gb
 
 . Verify all GPU resources are free:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues -o custom-columns=\
 NAME:.metadata.name,\

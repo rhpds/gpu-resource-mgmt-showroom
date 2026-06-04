@@ -59,14 +59,13 @@ Log in to the OpenShift CLI:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-admin} -p {password} --insecure-skip-tls-verify
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user} -p {password}
 ----
 ====
 
 . View the node labels that identify fake GPU nodes:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get nodes -l nvidia.com/gpu.present=true --show-labels | grep -o 'nvidia[^ ]*'
 ----
@@ -75,8 +74,7 @@ You should see a number of node labels including `nvidia.com/gpu.present=true` a
 
 . Check the GPU capacity reported by the node:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get node -l nvidia.com/gpu.present=true \
   -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.metadata.labels.nvidia\.com/gpu\.product}{"\t"}gpu={.status.capacity.nvidia\.com/gpu}{"\n"}{end}'
@@ -86,8 +84,7 @@ You should see the active GPU profile name and 8 full GPUs per node. MIG resourc
 
 . Inspect the fake-gpu-operator pods:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get pods -n gpu-operator
 ----
@@ -96,8 +93,7 @@ You should see a number of pods including `device-plugin-<hash>`, `topology-serv
 
 . Inspect the node allocatable resources:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.allocatable}{"\n"}{end}' | while read name alloc; do echo "=== $name ==="; echo "$alloc" | jq .; done
 ----
@@ -166,8 +162,7 @@ You should see simulated NVIDIA GPU information for the active profile -- produc
 
 . Check the GPU resource usage on the node:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc describe node -l nvidia.com/gpu.present=true | grep -A 15 "Allocated resources"
 ----

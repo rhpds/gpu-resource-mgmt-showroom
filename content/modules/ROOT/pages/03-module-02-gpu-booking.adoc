@@ -116,8 +116,7 @@ image::book-4-gpu.png[4 GPUs Booked,link=self,window=blank,width=700]
 
 . Verify the Kueue resources were created:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues
 ----
@@ -256,8 +255,7 @@ TIP: Borrowed GPUs let you burst beyond your reservation when the cluster has sp
 
 . Check for consumed bookings by listing active workloads:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get localqueues -A -o custom-columns=\
 NAMESPACE:.metadata.namespace,\
@@ -268,8 +266,7 @@ PENDING:.status.pendingWorkloads
 
 . Compare what the calendar shows with the Kueue state:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues -o custom-columns=\
 NAME:.metadata.name,\

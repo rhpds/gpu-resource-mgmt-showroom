@@ -103,8 +103,7 @@ oc login {openshift_api_url} -u {user-user1} -p {password}
 
 . List all ClusterQueues with their key properties:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues -o custom-columns=\
 NAME:.metadata.name,\
@@ -117,8 +116,7 @@ You should see only `default`, `unreserved`, and `unreserved-priority` ClusterQu
 
 . Inspect the `unreserved` ClusterQueue:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueue unreserved -o yaml
 ----
@@ -172,8 +170,7 @@ A https://kueue.sigs.k8s.io/docs/concepts/resource_flavor[ResourceFlavor^] tells
 
 . List ResourceFlavors:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get resourceflavors
 ----
@@ -196,8 +193,7 @@ You should see three flavors:
 
 . Inspect the `gpu-pool` ResourceFlavor:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get resourceflavor gpu-pool -o yaml
 ----
@@ -215,8 +211,7 @@ This label selector is how Kueue knows which nodes have fake GPUs. When the GPU 
 
 . Check the https://kueue.sigs.k8s.io/docs/concepts/topology[Topology^] configuration:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get topologies -A
 ----
@@ -273,8 +268,7 @@ Unreserved workloads are admitted by the `unreserved` ClusterQueue.
 
 . View the ClusterQueue usage after admission:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueue unreserved -o jsonpath='{.status.flavorsUsage}' | jq .
 ----
@@ -314,16 +308,14 @@ A critical detail of Kueue's design: the total capacity available to a ClusterQu
 
 . Inspect the Cohort's resource totals:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cohort unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
 
 . Compare with the `unreserved` ClusterQueue's nominalQuota:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
@@ -384,8 +376,7 @@ This is why the booking app uses different preemption policies for different que
 
 . Verify the Cohort shrinks when a reservation exists:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cohort unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}' | grep gpu
 ----
@@ -394,8 +385,7 @@ If you created a reservation in Exercise 1, the Cohort's `nvidia.com/gpu` will s
 
 . Check the WorkloadPriorityClasses:
 +
-[.copypaste]
-[source,bash]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get workloadpriorityclasses
 ----
