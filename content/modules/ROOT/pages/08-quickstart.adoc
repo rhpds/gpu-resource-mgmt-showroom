@@ -38,6 +38,13 @@ This walkthrough uses three user identities:
 | Reserves a GPU, creates an RHOAI workbench, triggers preemption of {user-user1}'s workload
 |===
 
+[Note]
+====
+This quickstart is using the **NVIDIA GB200 NVL** profile. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
+
+Don't worry if the images in this quickstart do not match exactly your GPU profile. The number of GPUs may be slightly different in the images depending on the profile you deploy and number of nodes in the cluster. Remember the GPUs are all simulated in this workshop!
+====
+
 == Exercise 1: Configure GPU profile (Admin)
 
 [IMPORTANT]
