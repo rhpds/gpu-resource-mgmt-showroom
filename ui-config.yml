@@ -8,10 +8,12 @@ view_switcher:
   default_mode: split
 
 tabs:
+  - name: Terminal
+    path: /wetty
+    port: 443
   - name: Red Hat OpenShift Console
-    url: '{openshift_console_url}'
+    url: 'https://console-openshift-console.${DOMAIN}'
+    external: false
   - name: Red Hat OpenShift AI
-    url: '{openshift_ai_url}'
-  # - name: Terminal
-  #   url: /terminal/
-  #   type: terminal
+    url: 'https://rh-ai.${DOMAIN}'
+    external: false
