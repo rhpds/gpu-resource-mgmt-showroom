@@ -28,8 +28,10 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
 ----
++
+You should see `Login successful` and the list of accessible projects for the {user-admin} user.
 
 . Verify your identity:
 +
@@ -37,6 +39,8 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user} -p {pas
 ----
 oc whoami
 ----
++
+You should see the {user-admin} user.
 
 == Verify GPU resources
 
@@ -46,6 +50,8 @@ oc whoami
 ----
 oc get nodes -l nvidia.com/gpu.present=true
 ----
++
+You should see the fake GPU nodes - this can be one or more nodes depending on the number of nodes in the cluster.
 
 . Verify GPU resources are allocatable:
 +
@@ -64,6 +70,8 @@ You should see `nvidia.com/gpu`, `nvidia.com/mig-1g.18gb`, `nvidia.com/mig-2g.35
 ----
 oc get pods -n openshift-kueue-operator
 ----
++
+You should see the Kueue controller pods - this can be one or more pods depending on the number of nodes in the cluster.
 
 . List the ClusterQueues:
 +
