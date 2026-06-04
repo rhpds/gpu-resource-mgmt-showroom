@@ -100,16 +100,14 @@ image::gpu-bulk-book-workbench.png[GPU bulk booking,link=self,window=blank,width
 
 . Log in to the OpenShift CLI:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
 
 . List Hardware Profiles in your namespace:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get hardwareprofiles
 ----
@@ -140,8 +138,7 @@ The booking app creates a profile for every MIG slice size defined in the GPU to
 
 . Inspect the reserved GPU profile:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get hardwareprofile reserved-gpu -o yaml
 ----
@@ -154,8 +151,7 @@ Note that the profile specifies:
 
 . Compare with the MIG profile:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get hardwareprofile reserved-mig-10gb -o yaml
 ----
@@ -164,8 +160,7 @@ The MIG profile requests a smaller GPU partition (`nvidia.com/mig-1g.10gb: 1`). 
 
 . Verify all reserved profiles point to the same reserved LocalQueue:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get hardwareprofiles -o custom-columns=\
 NAME:.metadata.name,\
@@ -199,8 +194,7 @@ You should see multiple Hardware Profiles in the `redhat-ods-applications` names
 
 . Inspect the unreserved GPU profile:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n redhat-ods-applications get hardwareprofile unreserved-gpu -o yaml
 ----
@@ -209,8 +203,7 @@ Note the `spec.resources` section showing CPU, memory, and GPU limits.
 
 . Compare with the default (CPU-only) profile:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n redhat-ods-applications get hardwareprofile cpu-only -o yaml
 ----
@@ -265,8 +258,7 @@ The fake-gpu-operator's `nvidia-smi` binary needs the `NODE_NAME` environment va
 
 . Patch the workbench to add the `NODE_NAME` environment variable:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} patch notebook gpu-workbench --type='json' \
   -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}}}]'
@@ -274,8 +266,7 @@ oc -n user-{user-user1} patch notebook gpu-workbench --type='json' \
 +
 This triggers a rolling restart of the workbench pod. Wait for it to reach **Ready** status again:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} rollout status statefulset/gpu-workbench --timeout=120s
 ----
@@ -286,8 +277,7 @@ NOTE: This patch is only needed because we are using the fake-gpu-operator. On a
 
 . From the CLI, verify the workbench pod has the GPU allocated:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-workbench -o name) -- nvidia-smi
 ----
@@ -296,8 +286,7 @@ You should see the matching GPU resource you selected as a hardware profile. Thi
 
 . Verify that the workload was admitted to the **reserved** queue, not the unreserved pool:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get workloads -o custom-columns=\
 NAME:.metadata.name,\
@@ -368,8 +357,7 @@ Hardware Profiles created by the booking app follow the reservation lifecycle --
 
 . Confirm the reserved HardwareProfiles have been removed:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get hardwareprofiles
 ----
@@ -378,8 +366,7 @@ The `reserved-*` profiles should no longer appear. The booking app's expiration 
 
 . Verify the Kueue resources are also gone:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq,lq -A | grep user-{user-user1}
 ----

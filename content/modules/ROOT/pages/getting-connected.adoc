@@ -51,7 +51,7 @@ You should see the {user-admin} user.
 oc get nodes -l nvidia.com/gpu.present=true
 ----
 +
-You should see the fake GPU nodes - this can be one or more nodes depending on the number of nodes in the cluster.
+You should see the fake GPU nodes - this can be one or more nodes depending on the number of nodes in the cluster. It will be three nodes in this workshop as we are running a three node compact cluster.
 
 . Verify GPU resources are allocatable:
 +
@@ -60,7 +60,7 @@ You should see the fake GPU nodes - this can be one or more nodes depending on t
 oc describe node -l nvidia.com/gpu.present=true | grep -A 10 "Allocatable:"
 ----
 +
-You should see `nvidia.com/gpu`, `nvidia.com/mig-1g.18gb`, `nvidia.com/mig-2g.35gb`, and `nvidia.com/mig-3g.71gb` in the allocatable resources.
+You should see `nvidia.com/gpu` in the allocatable resources.
 
 == Verify Kueue is running
 
@@ -71,7 +71,7 @@ You should see `nvidia.com/gpu`, `nvidia.com/mig-1g.18gb`, `nvidia.com/mig-2g.35
 oc get pods -n openshift-kueue-operator
 ----
 +
-You should see the Kueue controller pods - this can be one or more pods depending on the number of nodes in the cluster.
+You should see the Kueue controller and operator pods.
 
 . List the ClusterQueues:
 +
@@ -82,22 +82,11 @@ oc get clusterqueues
 +
 You should see at least `default`, `unreserved`, and `unreserved-priority` ClusterQueues.
 
-== Access OpenShift AI
-
-. Navigate to the OpenShift AI dashboard:
-+
-`{openshift_ai_url}`
-+
-Or click **Red Hat OpenShift AI** in the right panel tabs.
-
-. Verify you can see the Data Science Projects page.
-
 == Verify your namespaces
 
 . Verify your the user namespaces exists (user1, user2):
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get project {user-user1} {user-user2}
 ----
@@ -106,13 +95,20 @@ You should see the user namespaces `{user-user1}` and `{user-user2}`.
 
 . Check LocalQueues in the user namespace:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get localqueues
 ----
 +
 You should see `default` and `unreserved` LocalQueues.
+
+== Access OpenShift AI
+
+. Navigate to the OpenShift AI dashboard in the right panel tabs.
+
+. Verify you can see the Data Science Projects page.
++
+image::datascience-projects-page.png[Data Science Projects page,link=self,window=blank,width=700]
 
 === Verify
 

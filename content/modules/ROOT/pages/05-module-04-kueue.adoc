@@ -94,8 +94,7 @@ With this design, we can complement the Kueue Cohort model with other CQ's. One 
 **Acting as: `{user-user1}`** +
 Log in to the OpenShift CLI:
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
@@ -133,8 +132,7 @@ Wait for the Reservation Sync to create the user ClusterQueue .
 
 . Verify the user ClusterQueue was created:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get clusterqueues
 ----
@@ -143,16 +141,14 @@ You should now see a `user-{user-user1}` ClusterQueue alongside `default`, `unre
 
 . Compare the preemption policies:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq unreserved -o jsonpath='{.spec.preemption}' | jq .
 ----
 +
 The `unreserved` CQ has `reclaimWithinCohort: Never` -- it cannot preempt anyone.
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq user-{user-user1} -o jsonpath='{.spec.preemption}' | jq .
 ----
@@ -230,8 +226,7 @@ You can use Topology to enable https://kueue.sigs.k8s.io/docs/concepts/topology_
 
 . Submit a GPU workload to the unreserved queue:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Pod \
@@ -245,8 +240,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 
 . Watch the workload admission:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get workloads -w
 ----
@@ -255,8 +249,7 @@ Press `Ctrl+C` after the workload is admitted - you should see `ADMITTED: True` 
 
 . Check which ClusterQueue admitted the workload:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get workloads -o custom-columns=\
 NAME:.metadata.name,\
@@ -286,8 +279,7 @@ You should see the workload with `total=1` and `borrowed=1` in the `flavorsUsage
 
 . Clean up:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} delete pod kueue-test
 ----
@@ -322,8 +314,7 @@ oc get cq unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].reso
 +
 The `unreserved` CQ has `nominalQuota: 0` for every resource. It owns nothing -- all its capacity comes from borrowing from the Cohort. Now compare with the user CQ `user-{user-user1}` which is `reserved`:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq user-{user-user1} -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----

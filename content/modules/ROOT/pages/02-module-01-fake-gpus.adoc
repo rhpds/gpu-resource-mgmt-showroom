@@ -115,8 +115,7 @@ The MIG resources may be present but show "0" as the count. This is expected fro
 **Acting as: `{user-user1}`** +
 Log in to the OpenShift CLI:
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
@@ -124,8 +123,7 @@ oc login {openshift_api_url} -u {user-user1} -p {password}
 
 . Deploy a simple pod requesting one full GPU:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Pod \
@@ -139,16 +137,14 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 
 . Wait for the pod to start:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
 ----
 
 . Run nvidia-smi inside the pod:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} exec gpu-test -- nvidia-smi
 ----
@@ -184,8 +180,7 @@ You should see the GPU resource request and limits - usage - on each node.
 
 . Deploy a pod requesting a MIG 1g.18gb partition:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Pod \
@@ -199,16 +194,14 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 
 . Wait for the pod to be ready:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} wait pod/mig-test --for=condition=Ready --timeout=60s
 ----
 +
 . and run nvidia-smi:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} exec mig-test -- nvidia-smi
 ----
@@ -219,8 +212,7 @@ NOTE: MIG resource types vary by GPU profile. If your cluster is running a non-M
 
 . Clean up both test pods:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} delete pod gpu-test mig-test
 ----

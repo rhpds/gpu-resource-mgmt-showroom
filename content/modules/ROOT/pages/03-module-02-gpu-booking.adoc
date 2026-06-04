@@ -125,8 +125,7 @@ You should see a new ClusterQueue named after your user (e.g., `user-{user-user1
 
 . Inspect your user's ClusterQueue:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get clusterqueue user-{user-user1} -o yaml | grep -A 20 "resourceGroups"
 ----
@@ -135,8 +134,7 @@ The `nominalQuota` shows the GPU resources you reserved. You should see `nominal
 
 . Check that a LocalQueue was created in your namespace:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get localqueues
 ----
@@ -177,8 +175,7 @@ Let's see this in practice. You reserved 4 GPUs in Exercise 2, but now you'll de
 
 . Deploy a pod requesting **6** full GPUs to the reserved queue:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Pod \
@@ -194,8 +191,7 @@ image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
 
 . Wait for the pod to start:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
 ----
@@ -208,8 +204,7 @@ Your ClusterQueue `user-{user-user1}` has `nominalQuota: 4` -- that's your guara
 
 Inspect the ClusterQueue status to see this in action:
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc get cq user-{user-user1} -o jsonpath='{range .status.flavorsUsage[0].resources[*]}{.name}{"\t"}total={.total}{"\t"}borrowed={.borrowed}{"\n"}{end}'
 ----
@@ -279,8 +274,7 @@ PENDING:.status.pendingWorkloads
 
 . Delete the workload:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} delete pod gpu-test
 ----

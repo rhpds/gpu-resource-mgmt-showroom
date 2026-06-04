@@ -89,8 +89,7 @@ image::qs-empty-bookings.png[GPU Booking showing empty topology,link=self,window
 **Acting as: `{user-user1}`** +
 Log in to the OpenShift CLI:
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
@@ -102,8 +101,7 @@ You should see `Login successful` and the list of accessible projects.
 
 . Deploy a workload requesting 8 full GPUs to the unreserved cluster queue:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Deployment \
@@ -126,8 +124,7 @@ This renders a Helm chart locally and pipes the resulting Deployment manifest in
 
 . Wait for the deployment to be ready:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=120s
 ----
@@ -143,8 +140,7 @@ deployment "gpu-fake-gpu" successfully rolled out
 
 . Check that the pod can see the GPUs:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name) -- nvidia-smi
 ----
@@ -241,8 +237,7 @@ image::qs-workbench-running.png[RHOAI workbench in Ready state,link=self,window=
 
 . Log in to the CLI as `{user-2}`:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-2} -p {password}
 ----
@@ -295,8 +290,7 @@ When {user-2}'s reserved workload starts, Kueue automatically evicts {user-user1
 **Acting as: `{user-user1}`** +
 Switch to the {user-user1} CLI context:
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
@@ -304,8 +298,7 @@ oc login {openshift_api_url} -u {user-user1} -p {password}
 
 . Check the pods in {user-user1}'s namespace:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get pods
 ----
@@ -347,8 +340,7 @@ Return to the RHOAI dashboard as {user-2}.
 
 . Verify {user-user1}'s pod is running again:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} get pods
 ----
@@ -379,8 +371,7 @@ image::qs-cancel-booking.png[GPU Booking My Bookings with Cancel All button,link
 
 . Verify that the Kueue resources for {user-2} are removed:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user2} get cq,lq,hardwareprofile
 ----
@@ -408,8 +399,7 @@ When a booking is canceled, the GPU Booking app automatically cleans up all Kueu
 ====
 **Acting as: `{user-user1}`**
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-user1} -p {password}
 ----
@@ -417,8 +407,7 @@ oc login {openshift_api_url} -u {user-user1} -p {password}
 
 . Delete the unreserved deployment:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} delete deployment gpu-fake-gpu
 ----
@@ -436,8 +425,7 @@ deployment.apps "gpu-fake-gpu" deleted
 ====
 **Acting as: `{user-2}`**
 
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc login {openshift_api_url} -u {user-2} -p {password}
 ----
@@ -445,8 +433,7 @@ oc login {openshift_api_url} -u {user-2} -p {password}
 
 . Delete the workbench storage:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user2} delete pvc fake-gpu-workbench-storage
 ----
