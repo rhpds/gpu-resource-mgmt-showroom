@@ -80,17 +80,6 @@ oc get clusterqueues
 +
 You should see at least `default`, `unreserved`, and `unreserved-priority` ClusterQueues.
 
-. Clone a copy of this repo locally:
-+
-[.copypaste]
-[source,bash]
-----
-git clone https://github.com/eformat/fake-gpu-booking.git
-cd fake-gpu-booking
-----
-+
-We will use this repo to deploy test workloads to the cluster. This is the same repo that was used to deploy the GPU booking app.
-
 == Access OpenShift AI
 
 . Navigate to the OpenShift AI dashboard:
@@ -101,15 +90,17 @@ Or click **Red Hat OpenShift AI** in the right panel tabs.
 
 . Verify you can see the Data Science Projects page.
 
-== Set up your namespace
+== Verify your namespaces
 
 . Verify your the user namespaces exists (user1, user2):
 +
 [.copypaste]
 [source,bash,subs="attributes"]
 ----
-oc project {user-user1}
+oc get project {user-user1} {user-user2}
 ----
++
+You should see the user namespaces `{user-user1}` and `{user-user2}`.
 
 . Check LocalQueues in the user namespace:
 +
