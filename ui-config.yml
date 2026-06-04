@@ -12,6 +12,6 @@ tabs:
     url: '{openshift_console_url}'
   - name: Red Hat OpenShift AI
     url: '{openshift_ai_url}'
-  # - name: Terminal
-  #   url: /terminal/
-  #   type: terminal
+  - name: Terminal
+    url: /terminal/
+    type: terminal
