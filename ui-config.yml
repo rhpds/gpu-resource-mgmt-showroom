@@ -8,10 +8,6 @@ view_switcher:
   default_mode: split
 
 tabs:
-  - name: Red Hat OpenShift Console
-    url: '{openshift_console_url}'
-  - name: Red Hat OpenShift AI
-    url: '{openshift_ai_url}'
   - name: Terminal
     url: /terminal/
     type: terminal
