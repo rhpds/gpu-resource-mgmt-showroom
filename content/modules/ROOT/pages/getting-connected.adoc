@@ -26,10 +26,9 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Log in to the OpenShift cluster:
 +
-[.copypaste]
-[source,bash,subs="attributes"]
+[source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-admin} -p {password}
+oc login {openshift_api_url} -u {user-admin} -p {password} --insecure-skip-tls-verify
 ----
 
 . Verify your identity:
