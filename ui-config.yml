@@ -15,5 +15,5 @@ tabs:
     url: 'https://console-openshift-console.${DOMAIN}'
     external: false
   - name: Red Hat OpenShift AI
-    url: 'https://console-openshift-console.${DOMAIN}'
+    url: 'https://rh-ai.${DOMAIN}'
     external: false
