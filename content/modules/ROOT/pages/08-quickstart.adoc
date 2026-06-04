@@ -4,7 +4,11 @@
 :toclevels: 1
 :icons: font
 
-This quickstart walks through the complete GPU booking workflow end to end. You will configure a GPU profile as an administrator, deploy an unreserved workload as one user, then reserve GPUs and launch a workbench as a second user -- triggering preemption and observing how Kueue manages resource contention automatically.
+This quickstart exercise is a complete GPU booking workflow end to end. It is self contained and does not require you to have completed any of the modules so is suitable for a standalone walkthrough or demo.
+
+You will configure a GPU profile as an administrator, deploy an unreserved workload as one user, then reserve GPUs and launch a workbench as a second user -- triggering preemption and observing how Kueue manages resource contention automatically.
+
+The follow on Modules explore the individual components in more detail.
 
 == Learning objectives
 
