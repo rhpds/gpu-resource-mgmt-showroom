@@ -9,5 +9,11 @@ view_switcher:
 
 tabs:
   - name: Terminal
-    url: /terminal/
-    type: terminal
+    path: /wetty
+    port: 443
+  - name: Red Hat OpenShift Console
+    url: 'https://console-openshift-console.${DOMAIN}'
+    external: false
+  - name: Red Hat OpenShift AI
+    url: 'https://console-openshift-console.${DOMAIN}'
+    external: false
