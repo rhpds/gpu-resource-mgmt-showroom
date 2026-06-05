@@ -55,6 +55,7 @@ TIP: Use the **GPU Config Plugin** in the OpenShift Console (**GPU Configuration
 [IMPORTANT]
 ====
 **Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
 
 [source,console,role=execute,subs=attributes+]
 ----
