@@ -241,6 +241,14 @@ Log in as `{user-user2}` with password `{password}`.
 
 image::qs-workbench-create.png[RHOAI workbench creation form with Reserved GPU hardware profile,link=self,window=blank,width=700]
 
+. Adjust the **Resource requests and limits** to request 1 GPU, 1 CPU, and 1Gi of memory.
++
+image::qs-workbench-resource-requests.png[RHOAI workbench resource requests,link=self,window=blank,width=700]
+
+. Adjust the **Node selector** to select the node you deployed the GPU profile to.
++
+image::qs-workbench-node-selector.png[RHOAI workbench node selector,link=self,window=blank,width=700]
+
 . Click **Create workbench** and wait for it to reach **Ready** status.
 
 image::qs-workbench-running.png[RHOAI workbench in Ready state,link=self,window=blank,width=700]
