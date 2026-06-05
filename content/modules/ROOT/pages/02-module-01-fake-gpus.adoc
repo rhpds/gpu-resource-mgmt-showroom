@@ -117,7 +117,7 @@ Log in to the OpenShift CLI:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login $(oc whoami --show-server) -u {user-user1} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
 ----
 ====
 
