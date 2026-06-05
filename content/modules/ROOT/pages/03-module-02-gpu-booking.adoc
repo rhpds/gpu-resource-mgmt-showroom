@@ -211,10 +211,6 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set reserved=true \
   | oc -n user-{user-user1} apply -f-
 ----
-+
-You can also see the workload in the Bookings dashboard.
-+
-image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
 
 . Wait for the pod to start:
 +
@@ -222,6 +218,10 @@ image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
 ----
 oc -n user-{user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
 ----
+
+You can also see the workload in the Bookings dashboard.
++
+image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
 +
 You should see 4 **red** slots for the reserved GPUs and 2 **green** slots for the extra consumed GPUs, totalling 6. The Booking App refreshes the screen every 10 seconds, or use the refresh button in the top right.
 

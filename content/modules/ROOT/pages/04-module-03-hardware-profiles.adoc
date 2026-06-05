@@ -4,7 +4,7 @@
 :toclevels: 1
 :icons: font
 
-Hardware Profiles in Red Hat OpenShift AI define the compute resources available for workbenches and model serving. In this workshop environment, they connect GPU reservations from the booking app to the RHOAI workbench experience -- when you reserve a GPU, a corresponding HardwareProfile appears so you can launch a workbench with that GPU type.
+**Hardware Profiles** in Red Hat OpenShift AI define the compute resources available for workbenches and model serving. In this workshop environment, they connect GPU reservations from the booking app to the RHOAI workbench experience -- when you reserve a GPU, a corresponding HardwareProfile appears so you can launch a workbench with that GPU type.
 
 This is where **GPU as a Service** meets **Data Science**: you reserve GPU capacity through the booking app, and the reservation automatically surfaces as a Hardware Profile that data scientists select when launching workbenches. The data scientist doesn't need to know about Kueue, ClusterQueues, or Cohorts -- they just pick a profile and get a GPU-enabled notebook.
 
@@ -92,7 +92,7 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Add a description (e.g., "Module 3 -- Hardware Profiles exercise") and click **Book**.
 +
-The calendar should now show red slots across three resource type rows. The Reservation Sync runs every 10 minutes -- once it processes your booking, it creates a per-user ClusterQueue, LocalQueue, and a **Hardware Profile for each reserved resource type** in your namespace.
+The calendar should now show red slots across three resource type rows. The Reservation Sync runs -- once it processes your booking, it creates a per-user ClusterQueue, LocalQueue, and a **Hardware Profile for each reserved resource type** in your namespace.
 +
 image::gpu-bulk-book-workbench.png[GPU bulk booking,link=self,window=blank,width=700]
 
