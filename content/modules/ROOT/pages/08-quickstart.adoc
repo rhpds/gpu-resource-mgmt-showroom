@@ -58,6 +58,12 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Select the **NVIDIA GB200 NVL** profile card.
 
+. Select **one** of the three cluster nodes in the **GPU Target Node** selection box.
++
+image::gpu-node-picker.png[GPU Node Picker,link=self,window=blank,width=700]
++
+NOTE: You can select more than one node to deploy the GPU profile to. However, you should only select **one node** to deploy the GPU profile to in this workshop as the workload examples are tailored to target a single GPU node only.
+
 . Click **Deploy** to apply the GPU profile to the cluster.
 
 image::qs-gpu-config-gb200.png[GPU Config plugin showing GB200 NVL profile selected,link=self,window=blank,width=700]
