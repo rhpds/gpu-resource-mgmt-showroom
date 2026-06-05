@@ -62,7 +62,7 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 +
 image::gpu-node-picker.png[GPU Node Picker,link=self,window=blank,width=700]
 +
-NOTE: You can select more than one node to deploy the GPU profile to. However, you should only select **one node** to deploy the GPU profile to in this workshop as the workload examples are tailored to target a single GPU node only.
+NOTE: You can select more than one node to deploy the GPU profile to. For this workshop you should only select **one node** as the examples are tailored to target a single GPU node only.
 
 . Click **Deploy** to apply the GPU profile to the cluster.
 
