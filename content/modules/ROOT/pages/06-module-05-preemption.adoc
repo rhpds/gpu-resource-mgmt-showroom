@@ -388,22 +388,11 @@ oc -n user-{user-user2} rollout status deployment/gpu-fake-10gb --timeout=60s
 +
 image::preempted-2.png[Preempted 2 Unreserved MIG Workloads by Reserved MIG Workload,link=self,window=blank,width=700]
 
-[IMPORTANT]
-====
-**Acting as: `{user-admin}`** +
-Log in to the OpenShift CLI:
-
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
-----
-====
-
 . Check nvidia-smi on the MIG workloads:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-10gb -o name | head -1) -- nvidia-smi
+oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-10gb -o name | head -1) -- nvidia-smi
 ----
 +
@@ -412,7 +401,7 @@ Notice the MIG partition size (10 GB) shown in nvidia-smi output.
 === Verify
 
 &#10003; Unreserved MIG workload preempted by reserved MIG workload +
-&#10003; Both MIG workloads running with correct partition counts
+&#10003; Both **{user-user2}** reserved workloads running with correct GPU and MIG partition counts
 
 == Exercise 4: Clean up all workloads
 
@@ -466,6 +455,18 @@ ADMITTED:.status.admittedWorkloads
 ----
 +
 All ClusterQueues should show 0 admitted workloads.
+
+. {user-user2}: Cancel booking
++
+[IMPORTANT]
+====
+**Acting as: `{user-user2}`** +
+Return to the OpenShift Console as {user-user2}.
+====
++
+. Navigate to **GPU Booking** > **Bookings** and click **My Bookings**.
++
+. Click **Cancel All** to remove the GPU reservation, then click **Confirm**.
 
 === Verify
 

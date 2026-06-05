@@ -437,7 +437,6 @@ Return to the OpenShift Console as {user-user1}.
 +
 . Click **Cancel All** to remove the GPU reservation, then click **Confirm**.
 
-
 === Verify
 
 &#10003; Understand that Cohort and CQ nominalQuotas are additive +
