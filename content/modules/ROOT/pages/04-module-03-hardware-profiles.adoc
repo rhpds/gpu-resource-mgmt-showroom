@@ -254,7 +254,7 @@ image::reserved-hwprofiles.png[Reserved GPU Hardware Profiles,link=self,window=b
 
 . Expand **Customize resource requests and limits** to request more than the default 1 GPU.
 +
-Since you reserved 8 full GPUs in Exercise 1, you can allocate multiple GPUs to a single workbench. Set the GPU count to **4** (or more, up to the `maxCount` shown in the profile). This demonstrates that a data scientist can claim a larger share of their reserved quota for intensive training workloads.
+Since you reserved 8 full GPUs in Exercise 1, you can allocate multiple GPUs to a single workbench. Set the GPU count to **4** (or more, up to the `maxCount` shown in the profile). Set CPU to **1** and Memory to **1Gi**. Set the requests and limits to the same values. This demonstrates that a data scientist can claim any portion of their reserved quota for their own workloads.
 +
 image::customize-resource-requests.png[Customize resource requests and limits,link=self,window=blank,width=700]
 
