@@ -349,6 +349,8 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 ====
 
 . Open the **GPU Booking** > **Bookings** page in the OpenShift Console and book 8 MIG-1g.10gb partitions for today.
++
+image::reserved-book-8.png[Reserved Workload Booked 8 MIG-1g.10gb Partitions,link=self,window=blank,width=700]
 
 [IMPORTANT]
 ====
@@ -381,6 +383,21 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 ----
 oc -n user-{user-user2} rollout status deployment/gpu-fake-10gb --timeout=60s
 ----
+
+. We should now see both **{user-user2}** reserved workloads running and **{user-user1}** unreserved workloads preempted in the Booking App.
++
+image::preempted-2.png[Preempted 2 Unreserved MIG Workloads by Reserved MIG Workload,link=self,window=blank,width=700]
+
+[IMPORTANT]
+====
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
+====
 
 . Check nvidia-smi on the MIG workloads:
 +
