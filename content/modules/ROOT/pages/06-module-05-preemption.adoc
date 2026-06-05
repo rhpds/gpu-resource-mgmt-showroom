@@ -317,6 +317,24 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 oc -n user-{user-user1} rollout status deployment/gpu-fake-10gb --timeout=60s
 ----
 
+. Check the running pods:
++
+[source,console,role=execute,subs=attributes+]
+----
+oc -n user-{user-user1} get pods
+----
++
+Expected output:
++
+[source,text]
+----
+oc get pods
+NAME                             READY   STATUS            RESTARTS   AGE
+gpu-fake-10gb-5d687f5d44-gxncs   1/1     Running           0          7s
+gpu-fake-gpu-54959878d8-m4zdc    0/1     SchedulingGated   0          21m
+----
++ We can see the full GPU is `SchedulingGated` (it is still preempted) and the MIG workload is `Running`.
+
 [IMPORTANT]
 ====
 **Acting as: `{user-user2}`** +
