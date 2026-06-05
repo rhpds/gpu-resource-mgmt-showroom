@@ -160,8 +160,24 @@ Expected output:
 ----
 deployment.apps/gpu-fake-gpu created
 ----
+
+. The workload will be in a `SchedulingGated` state as we have not yet booked a GPU for today.
 +
-The workload will be in a `Pending` state as we have not yet booked a GPU for today.
+[source,console,role=execute,subs=attributes+]
+----
+oc -n user-{user-user2} get pods,workload
+----
++
+Expected output:
++
+[source,text]
+----
+NAME                                READY   STATUS            RESTARTS   AGE
+pod/gpu-fake-gpu-74868b8b79-4cxdw   0/1     SchedulingGated   0          38s
+
+NAME                                                              QUEUE      RESERVED IN   ADMITTED   FINISHED   AGE
+workload.kueue.x-k8s.io/pod-gpu-fake-gpu-74868b8b79-4cxdw-18555   reserved                                       38s
+----
 
 [IMPORTANT]
 ====
