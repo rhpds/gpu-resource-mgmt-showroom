@@ -4,7 +4,7 @@
 :toclevels: 1
 :icons: font
 
-Preemption is the mechanism that gives reserved workloads priority over unreserved ones. When a user with a reservation submits a workload and there aren't enough free resources, Kueue evicts unreserved workloads to make room.
+https://kueue.sigs.k8s.io/docs/concepts/preemption[Preemption^] is the mechanism that gives reserved workloads priority over unreserved ones. When a user with a reservation submits a workload and there aren't enough free resources, Kueue evicts unreserved workloads to make room.
 
 In this module, you'll simulate a multi-user GPU contention scenario using the workload Helm chart and observe preemption in action.
 
@@ -70,12 +70,26 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set reserved=false \
   | oc -n user-{user-user1} apply -f-
 ----
++
+Expected output:
++
+[source,text]
+----
+deployment.apps/gpu-fake-gpu created
+----
 
 . Wait for the deployment to be ready:
 +
 [source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=60s
+----
++
+Expected output:
++
+[source,text]
+----
+deployment "gpu-fake-gpu" successfully rolled out
 ----
 
 . Verify all GPUs are consumed:
@@ -84,6 +98,17 @@ oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=60s
 ----
 oc get clusterqueue unreserved -o jsonpath='{.status.flavorsUsage}' | jq .
 ----
++
+Expected output:
++
+[source,json]
+----
+{
+  "borrowed": "0",
+  "name": "nvidia.com/gpu",
+  "total": "8"
+}
+----
 
 . Verify nvidia-smi shows the GPUs:
 +
@@ -91,6 +116,9 @@ oc get clusterqueue unreserved -o jsonpath='{.status.flavorsUsage}' | jq .
 ----
 oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 ----
++
+You should see 8 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. Each row represents one simulated GPU with its memory usage and utilization.
+
 
 === Verify
 
@@ -125,6 +153,24 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set reserved=true \
   | oc -n user-{user-user2} apply -f-
 ----
++
+Expected output:
++
+[source,text]
+----
+deployment.apps/gpu-fake-gpu created
+----
+
+[IMPORTANT]
+====
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
+====
 
 . Watch the preemption happen:
 +
