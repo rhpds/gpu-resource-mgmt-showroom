@@ -114,6 +114,17 @@ The booking should appear as a colored slot in the calendar. You should see 4 re
 +
 image::book-4-gpu.png[4 GPUs Booked,link=self,window=blank,width=700]
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 . Verify the Kueue resources were created:
 +
 [source,console,role=execute,subs=attributes+]
