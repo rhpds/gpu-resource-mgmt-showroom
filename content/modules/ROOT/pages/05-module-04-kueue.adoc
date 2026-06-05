@@ -4,7 +4,7 @@
 :toclevels: 1
 :icons: font
 
-Kueue is a Kubernetes-native job queueing system that manages resource quotas, fair sharing, and workload preemption. In this workshop environment, Kueue controls how GPU resources are shared between users with reservations and those using the unreserved pool.
+https://kueue.sigs.k8s.io/docs/overview[Kueue^] is a Kubernetes-native job queueing system that manages resource quotas, fair sharing, and workload preemption. In this workshop environment, Kueue controls how GPU resources are shared between users with reservations and those using the unreserved pool.
 
 In this module, you'll explore the Kueue resource hierarchy, understand how Cohorts enable resource sharing, and trace a workload through the admission process.
 
