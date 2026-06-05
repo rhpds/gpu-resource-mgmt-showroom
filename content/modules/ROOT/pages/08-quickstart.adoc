@@ -37,7 +37,7 @@ This walkthrough uses three user identities:
 | Regular user
 | Deploys an unreserved workload consuming all GPUs
 
-| `{user-2}`
+| `{user-user2}`
 | Regular user
 | Reserves a GPU, creates an RHOAI workbench, triggers preemption of {user-user1}'s workload
 |===
@@ -188,15 +188,15 @@ image::qs-user1-workload-running.png[GPU Booking showing 8 GPUs consumed by {use
 
 &#10003; Deployment `gpu-fake-gpu` is running in `{user-user1}` namespace +
 &#10003; `nvidia-smi` shows 8 GPUs allocated +
-&#10003; GPU Booking shows 8/8 full GPUs consumed +
+&#10003; GPU Booking shows 8/8 full GPUs consumed (it will be 8/24 for 3 node clusters like this one) +
 &#10003; RHOAI dashboard is accessible
 
-== Exercise 3: Reserve a GPU and create a workbench ({user-2})
+== Exercise 3: Reserve a GPU and create a workbench ({user-user2})
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`** +
-Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-2}` and password `{password}`.
+**Acting as: `{user-user2}`** +
+Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-user2}` and password `{password}`.
 ====
 
 === Create a GPU booking
@@ -213,9 +213,9 @@ image::qs-create-booking.png[GPU Booking calendar with slot grid,link=self,windo
 
 The slot grid now shows your reservation alongside {user-user1}'s consumed workloads:
 
-image::qs-booking-confirmed.png[Slot grid showing {user-2} reservation and {user-user1} consumed slots,link=self,window=blank,width=700]
+image::qs-booking-confirmed.png[Slot grid showing {user-user2} reservation and {user-user1} consumed slots,link=self,window=blank,width=700]
 
-image::qs-booking-confirmed-2.png[GPU Booking grid showing {user-2} reservation and {user-user1} consumed slots,link=self,window=blank,width=700]
+image::qs-booking-confirmed-2.png[GPU Booking grid showing {user-user2} reservation and {user-user1} consumed slots,link=self,window=blank,width=700]
 
 === Create an RHOAI workbench
 
@@ -223,9 +223,9 @@ image::qs-booking-confirmed-2.png[GPU Booking grid showing {user-2} reservation 
 +
 `{openshift_ai_url}`
 +
-Log in as `{user-2}` with password `{password}`.
+Log in as `{user-user2}` with password `{password}`.
 
-. Navigate to **Projects** and select the **User {user-2} Project**.
+. Navigate to **Projects** and select the **User {user-user2} Project**.
 
 . Click **Create a workbench** and fill in:
 +
@@ -241,11 +241,11 @@ image::qs-workbench-running.png[RHOAI workbench in Ready state,link=self,window=
 
 === Verify Kueue state
 
-. Log in to the CLI as `{user-2}`:
+. Log in to the CLI as `{user-user2}`:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-2} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
 ----
 
 . Check the Kueue resources:
@@ -275,19 +275,19 @@ NAMESPACE    NAME                                                        QUEUE  
 +
 This output shows preemption in action:
 +
-* **{user-user1}'s workloads** are now `ADMITTED=False` or have no admission status. Kueue evicted them to free the GPU for {user-2}'s reservation. The `unreserved` queue shows 2 pending workloads that are waiting for resources.
-* **{user-2}'s workload** shows `ADMITTED=True` and `RESERVED IN={user-user2}`. The booking app created a dedicated ClusterQueue (`{user-user2}`) for the reservation, and the workbench workload was admitted there with priority over the unreserved workloads.
+* **{user-user1}'s workloads** are now `ADMITTED=False` or have no admission status. Kueue evicted them to free the GPU for {user-user2}'s reservation. The `unreserved` queue shows 2 pending workloads that are waiting for resources.
+* **{user-user2}'s workload** shows `ADMITTED=True` and `RESERVED IN={user-user2}`. The booking app created a dedicated ClusterQueue (`{user-user2}`) for the reservation, and the workbench workload was admitted there with priority over the unreserved workloads.
 * The `{user-user2}` ClusterQueue belongs to the same `unreserved` cohort -- this is how Kueue's `reclaimWithinCohort` policy allows reserved workloads to reclaim resources from unreserved ones.
 
 === Verify
 
-&#10003; GPU booking created for {user-2} +
+&#10003; GPU booking created for {user-user2} +
 &#10003; Workbench `fake-gpu-workbench` is running in RHOAI +
-&#10003; {user-2}'s ClusterQueue and LocalQueue are visible in Kueue
+&#10003; {user-user2}'s ClusterQueue and LocalQueue are visible in Kueue
 
 == Exercise 4: Observe preemption
 
-When {user-2}'s reserved workload starts, Kueue automatically evicts {user-user1}'s unreserved pod to free the GPU. You can observe this in both the CLI and the GPU Booking app.
+When {user-user2}'s reserved workload starts, Kueue automatically evicts {user-user1}'s unreserved pod to free the GPU. You can observe this in both the CLI and the GPU Booking app.
 
 === {user-user1}: Watch pod preemption
 
@@ -317,25 +317,25 @@ NAME                            READY   STATUS            RESTARTS   AGE
 gpu-fake-gpu-54959878d8-g88dn   0/1     SchedulingGated   0          15m
 ----
 +
-{user-user1}'s pod shows `SchedulingGated` -- Kueue has evicted it to reclaim the GPU for {user-2}'s reservation. The pod is not terminated; it is held in a gated state and will automatically resume once the GPU becomes available again.
+{user-user1}'s pod shows `SchedulingGated` -- Kueue has evicted it to reclaim the GPU for {user-user2}'s reservation. The pod is not terminated; it is held in a gated state and will automatically resume once the GPU becomes available again.
 
-. Open the **GPU Booking** > **Bookings** page to see the preemption reflected in the usage overview. {user-2}'s reservation (red) now holds 1 GPU:
+. Open the **GPU Booking** > **Bookings** page to see the preemption reflected in the usage overview. {user-user2}'s reservation (red) now holds 1 GPU:
 
-image::qs-preemption-user1.png[GPU Booking showing preemption -- {user-2} reservation active while {user-user1} is evicted,link=self,window=blank,width=700]
+image::qs-preemption-user1.png[GPU Booking showing preemption -- {user-user2} reservation active while {user-user1} is evicted,link=self,window=blank,width=700]
 
-=== {user-2}: Delete workbench and observe recovery
+=== {user-user2}: Delete workbench and observe recovery
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`** +
-Return to the RHOAI dashboard as {user-2}.
+**Acting as: `{user-user2}`** +
+Return to the RHOAI dashboard as {user-user2}.
 ====
 
-. In RHOAI, navigate to **Projects** > **User {user-2} Project** > **Workbenches**.
+. In RHOAI, navigate to **Projects** > **User {user-user2} Project** > **Workbenches**.
 
 . Delete the `fake-gpu-workbench` workbench using the kebab menu (three dots).
 
-. Once the workbench is deleted, {user-2}'s workload releases the GPU. {user-user1}'s pod will automatically recover and return to `Running` status.
+. Once the workbench is deleted, {user-user2}'s workload releases the GPU. {user-user1}'s pod will automatically recover and return to `Running` status.
 
 === {user-user1}: Pod recovers
 
@@ -359,14 +359,14 @@ NAME                            READY   STATUS    RESTARTS   AGE
 gpu-fake-gpu-54959878d8-4gknt   1/1     Running   0          2m
 ----
 +
-Once {user-2}'s workbench released the GPU, Kueue automatically re-admitted {user-user1}'s workload. The pod transitions from `SchedulingGated` back to `Running` without any manual intervention.
+Once {user-user2}'s workbench released the GPU, Kueue automatically re-admitted {user-user1}'s workload. The pod transitions from `SchedulingGated` back to `Running` without any manual intervention.
 
-=== {user-2}: Cancel booking
+=== {user-user2}: Cancel booking
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`** +
-Return to the OpenShift Console as {user-2}.
+**Acting as: `{user-user2}`** +
+Return to the OpenShift Console as {user-user2}.
 ====
 
 . Navigate to **GPU Booking** > **Bookings** and click **My Bookings**.
@@ -375,7 +375,7 @@ Return to the OpenShift Console as {user-2}.
 
 image::qs-cancel-booking.png[GPU Booking My Bookings with Cancel All button,link=self,window=blank,width=700]
 
-. Verify that the Kueue resources for {user-2} are removed:
+. Verify that the Kueue resources for {user-user2} are removed:
 +
 [source,console,role=execute,subs=attributes+]
 ----
@@ -393,9 +393,9 @@ When a booking is canceled, the GPU Booking app automatically cleans up all Kueu
 
 === Verify
 
-&#10003; {user-user1}'s pod was preempted (`SchedulingGated`) when {user-2}'s reserved workload started +
-&#10003; {user-user1}'s pod recovered to `Running` after {user-2} deleted the workbench +
-&#10003; {user-2}'s ClusterQueue, LocalQueue, and HardwareProfiles removed after canceling the booking
+&#10003; {user-user1}'s pod was preempted (`SchedulingGated`) when {user-user2}'s reserved workload started +
+&#10003; {user-user1}'s pod recovered to `Running` after {user-user2} deleted the workbench +
+&#10003; {user-user2}'s ClusterQueue, LocalQueue, and HardwareProfiles removed after canceling the booking
 
 == Exercise 5: Cleanup
 
@@ -425,15 +425,15 @@ Expected output:
 deployment.apps "gpu-fake-gpu" deleted
 ----
 
-=== {user-2}: Delete storage
+=== {user-user2}: Delete storage
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`**
+**Acting as: `{user-user2}`**
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-2} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
 ----
 ====
 

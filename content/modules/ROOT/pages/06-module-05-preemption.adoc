@@ -101,12 +101,12 @@ oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-g
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`** +
+**Acting as: `{user-user2}`** +
 Log in to the OpenShift CLI:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-2} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
 ----
 ====
 
@@ -206,12 +206,12 @@ oc -n user-{user-user1} rollout status deployment/gpu-fake-18gb --timeout=60s
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`** +
-Switch to the {user-2} CLI context:
+**Acting as: `{user-user2}`** +
+Switch to the {user-user2} CLI context:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-2} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
 ----
 ====
 
@@ -273,19 +273,19 @@ oc -n user-{user-user1} delete deployment gpu-fake-gpu
 oc -n user-{user-user1} delete deployment gpu-fake-18gb
 ----
 
-=== {user-2}: Delete workloads
+=== {user-user2}: Delete workloads
 
 [IMPORTANT]
 ====
-**Acting as: `{user-2}`**
+**Acting as: `{user-user2}`**
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-2} -p {password}
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
 ----
 ====
 
-. Remove {user-2}'s test deployments:
+. Remove {user-user2}'s test deployments:
 +
 [source,console,role=execute,subs=attributes+]
 ----
