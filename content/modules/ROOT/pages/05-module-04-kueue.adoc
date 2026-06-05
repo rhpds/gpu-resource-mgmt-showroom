@@ -53,6 +53,14 @@ All ClusterQueues share resources through the **unreserved** Cohort. The key dif
 | Yes -- `reclaimWithinCohort: Any` reclaims its protected quota
 |===
 
+=== What is the difference between reclaiming and borrowing?
+
+**Borrowing**: A ClusterQueue uses GPU/resource quota from another ClusterQueue in the same Cohort when its own quota is exhausted. The borrowing queue gets extra capacity it doesn't own.
+
+**Reclaiming**: The queue that owns the quota takes it back from a borrower. When the owner needs its resources, it **preempts** workloads that were borrowing them.
+
+In short: **borrowing** is "can I use your unused quota?", **reclaiming** is "I need my quota back."
+
 === What is low-priority borrowing?
 
 The `unreserved-priority` ClusterQueue exists for workloads that need to preempt other unreserved work -- without having a reservation. It has `nominalQuota: 0` (no guaranteed resources), so all its resources are borrowed from the Cohort. The difference from the regular `unreserved` queue is its preemption policy:
