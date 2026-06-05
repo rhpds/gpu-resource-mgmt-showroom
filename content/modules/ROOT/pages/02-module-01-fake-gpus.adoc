@@ -88,7 +88,7 @@ You should see the active GPU profile name and 8 full GPUs per node. MIG resourc
 oc get pods -n gpu-operator
 ----
 +
-You should see a number of pods including `device-plugin-<hash>`, `topology-server-<hash>`, and `gpu-node-labeler-<hash>`.
+You should see a number of pods including `device-plugin-<hash>`, `topology-server-<hash>`, `nvidia-dcgm-exporter-<hash>`, and `gpu-node-labeler-<hash>`.
 
 . Inspect the node allocatable resources:
 +
@@ -99,7 +99,7 @@ oc get nodes -o jsonpath='{range .items[*]}{.metadata.name}{"\t"}{.status.alloca
 +
 You should see cpu, memory, pods and `nvidia.com/gpu` resource counts. If you see `nvidia.com/mig-*` resource counts, then you are running a MIG-capable profile.
 
-The MIG resources may be present but show "0" as the count. This is expected from any prior MIG profiles that have been set and are no longer in use. They only reset when the Kubelet is restarted on the node.
+TIP: The MIG resources may be present but show "0" as the count. This is expected from any prior MIG profiles that have been set and are no longer in use. They only reset when the Kubelet is restarted on the node.
 
 === Verify
 
