@@ -345,6 +345,7 @@ A critical detail of Kueue's design: the total capacity available to a ClusterQu
 ----
 oc get cohort unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
++ You should see that it owns 7/8 GPUs in the cluster and all the MIG partitions.
 
 . Compare with the `unreserved` ClusterQueue's nominalQuota:
 +
@@ -423,6 +424,19 @@ oc get workloadpriorityclasses
 ----
 +
 Higher priority workloads are admitted first and can preempt lower priority ones (within preemption policy rules).
+
+. {user-user1}: Cancel booking
++
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Return to the OpenShift Console as {user-user1}.
+====
++
+. Navigate to **GPU Booking** > **Bookings** and click **My Bookings**.
++
+. Click **Cancel All** to remove the GPU reservation, then click **Confirm**.
+
 
 === Verify
 
