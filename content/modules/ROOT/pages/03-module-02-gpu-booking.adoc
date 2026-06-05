@@ -24,7 +24,7 @@ By the end of this module, you'll be able to:
 
 [NOTE]
 ====
-The exercises below use the **NVIDIA GB200 NVL** profile. If you are not using this profile, you will need to switch to it using the GPU Config Plugin. See the Quickstart module for more details. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
+The exercises below use the **NVIDIA GB200 NVL** profile. If you are not using this profile, you will need to switch to it using the GPU Config Plugin. See the xref:08-quickstart.adoc[Quickstart module] for more details. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
 ====
 
 == How the booking app works
@@ -58,7 +58,7 @@ Other designs are possible, the Booking App is one of many possible implementati
 
 [NOTE]
 ====
-The exercises below use the **NVIDIA GB200 NVL** profile. If you are not using this profile, you will need to switch to it using the GPU Config Plugin. See the Quickstart module for more details. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
+The exercises below use the **NVIDIA GB200 NVL** profile. If you are not using this profile, you will need to switch to it using the GPU Config Plugin. See the xref:08-quickstart.adoc[Quickstart module] for more details. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
 ====
 
 == Exercise 1: Open the GPU Booking App
