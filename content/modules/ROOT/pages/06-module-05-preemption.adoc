@@ -130,6 +130,8 @@ image::unreserved-all-8.png[Unreserved Workload Running with 8 GPUs,link=self,wi
 
 == Exercise 2: Trigger preemption with a reserved workload
 
+We are now going to trigger preemption with a reserved workload. We will create a reserved workload before we book a GPU for today. This gives us a chance to see the preemption happen in action.
+
 [IMPORTANT]
 ====
 **Acting as: `{user-user2}`** +
@@ -208,18 +210,11 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Open the **GPU Booking** > **Bookings** page in the OpenShift Console and book 1 GPU for today.
 
-[IMPORTANT]
-====
-**Acting as: `{user-admin}`** +
-Log in to the OpenShift CLI:
+. The pod will be admitted by Kueue but scheduling now needs to re-run. Delete the pod to trigger scheduling. From the OpenShift Console, navigate to **Workloads** > **Pods** and delete the pod.
++
+image::delete-pod.png[Delete Pod,link=self,window=blank,width=700]
 
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
-----
-====
-
-. Expected output on the terminal once you Booked a GPU for today:
+. Back on the **{user-admin}** terminal - we now expected to see the preemption event:
 +
 [source,text]
 ----
