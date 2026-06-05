@@ -98,12 +98,16 @@ image::gpu-bulk-book-workbench.png[GPU bulk booking,link=self,window=blank,width
 
 === Check the Hardware Profiles
 
-. Log in to the OpenShift CLI:
-+
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
 [source,console,role=execute,subs=attributes+]
 ----
 oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
 ----
+====
 
 . List Hardware Profiles in your namespace:
 +
@@ -180,7 +184,13 @@ All reserved profiles should show `reserved` as their queue. This is what ties t
 
 [IMPORTANT]
 ====
-**Acting as: `{user-admin}`**
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
 ====
 
 . List all Hardware Profiles across namespaces:
@@ -275,6 +285,17 @@ NOTE: This patch is only needed because we are using the fake-gpu-operator. On a
 
 === Verify GPU access from the workbench
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 . From the CLI, verify the workbench pod has the GPU allocated:
 +
 [source,console,role=execute,subs=attributes+]
@@ -354,6 +375,17 @@ Hardware Profiles created by the booking app follow the reservation lifecycle --
 . In the OpenShift Console, navigate to **GPU Booking** > **Bookings** and click **My Bookings**.
 
 . Click **Cancel All** to remove your GPU reservations, then click **Confirm**.
+
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
 
 . Confirm the reserved HardwareProfiles have been removed:
 +

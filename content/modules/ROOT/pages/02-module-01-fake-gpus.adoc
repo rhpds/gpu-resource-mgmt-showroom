@@ -153,7 +153,13 @@ You should see simulated NVIDIA GPU information for the active profile -- produc
 
 [IMPORTANT]
 ====
-**Acting as: `{user-admin}`**
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
 ====
 
 . Check the GPU resource usage on the node:
@@ -175,7 +181,13 @@ You should see the GPU resource request and limits - usage - on each node.
 
 [IMPORTANT]
 ====
-**Acting as: `{user-user1}`**
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
 ====
 
 . Deploy a pod requesting a MIG 1g.18gb partition:

@@ -164,6 +164,17 @@ The `user-{user-user1}` CQ has `reclaimWithinCohort: Any` -- it can preempt unre
 
 A https://kueue.sigs.k8s.io/docs/concepts/resource_flavor[ResourceFlavor^] tells Kueue which nodes can satisfy a particular type of resource. Each ClusterQueue references one or more flavors in its `resourceGroups` -- this is how Kueue matches GPU workloads to the right nodes.
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 . List ResourceFlavors:
 +
 [source,console,role=execute,subs=attributes+]
@@ -223,6 +234,17 @@ You can use Topology to enable https://kueue.sigs.k8s.io/docs/concepts/topology_
 &#10003; Topology configuration defines scheduling levels
 
 == Exercise 3: Trace a workload through admission
+
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
 
 . Submit a GPU workload to the unreserved queue:
 +
@@ -293,6 +315,17 @@ oc -n user-{user-user1} delete pod kueue-test
 == Exercise 4: Understand the Cohort model
 
 The https://kueue.sigs.k8s.io/docs/concepts/cohort[Cohort^] is the key to resource sharing. All https://kueue.sigs.k8s.io/docs/concepts/cluster_queue[ClusterQueues^] in the same Cohort share a single pool of resources.
+
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
 
 === Cohort resources are ADDITIVE to CQ resources
 

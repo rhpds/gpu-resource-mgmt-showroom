@@ -248,6 +248,17 @@ TIP: Borrowed GPUs let you burst beyond your reservation when the cluster has sp
 
 === Correlate with Kueue state
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 . Check for consumed bookings by listing active workloads:
 +
 [source,console,role=execute,subs=attributes+]
@@ -271,6 +282,17 @@ PENDING:.status.pendingWorkloads
 ----
 
 === Clean up
+
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
 
 . Delete the workload:
 +
