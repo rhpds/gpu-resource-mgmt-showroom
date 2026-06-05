@@ -104,7 +104,7 @@ Expected output:
 [source,json]
 ----
 {
-  "borrowed": "0",
+  "borrowed": "8",
   "name": "nvidia.com/gpu",
   "total": "8"
 }
@@ -160,6 +160,8 @@ Expected output:
 ----
 deployment.apps/gpu-fake-gpu created
 ----
++
+The workload will be in a `Pending` state as we have not yet booked a GPU for today.
 
 [IMPORTANT]
 ====
@@ -172,11 +174,38 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -
 ----
 ====
 
-. Watch the preemption happen:
+. Watch the preemption happen in the terminal:
 +
 [source,console,role=execute,subs=attributes+]
 ----
 oc get events -A --sort-by='.lastTimestamp' --field-selector reason=Preempted -w
+----
+
+[IMPORTANT]
+====
+**Acting as: `{user-user2}`** +
+Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-user2}` and password `{password}`.
+====
+
+. Open the **GPU Booking** > **Bookings** page in the OpenShift Console and book 1 GPU for today.
+
+[IMPORTANT]
+====
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
+====
+
+. Expected output on the terminal once you Booked a GPU for today:
++
+[source,text]
+----
+NAMESPACE    LAST SEEN   TYPE     REASON      OBJECT                                             MESSAGE
+user-user1   0s          Normal   Preempted   workload/pod-gpu-fake-gpu-54959878d8-nclg6-a68ff   Preempted to accommodate a workload (UID: 79cd54c4-2146-451a-96c8-5ca1609a451e, JobUID: 7e9fa1f0-3072-4e20-9d4d-54ae8007955f) due to reclamation within the cohort; preemptor path: /unreserved/user-user2; preemptee path: /unreserved/unreserved
 ----
 +
 Press `Ctrl+C` after you see preemption events. Kueue evicts the unreserved workload to free one GPU for the reserved request.
