@@ -236,12 +236,13 @@ ADMISSION:.status.admission.clusterQueue,\
 ADMITTED:.status.conditions[0].status
 ----
 +
-Expected output:
+Expected output - the unreserved workload is not admitted and the reserved workload is admitted:
 +
 [source,text]
 ----
-NAMESPACE    NAME                                             QUEUE      RESERVED IN   ADMITTED   FINISHED   AGE
-user-user2   workload.kueue.x-k8s.io/pod-gpu-fake-gpu-54959878d8-nclg6-a68ff   reserved                                       38s
+NAMESPACE    NAME                                      QUEUE        ADMISSION    ADMITTED
+user-user1   pod-gpu-fake-gpu-54959878d8-m4zdc-84bd2   unreserved   <none>       False
+user-user2   pod-gpu-fake-gpu-74868b8b79-c8hlg-af2e1   reserved     user-user2   True
 ----
 
 . Verify the reserved workload is running:
@@ -276,12 +277,13 @@ You should see the reserved workload is running (red) and the preemption event i
 === Verify
 
 &#10003; Reserved workload preempted the unreserved workload +
-&#10003; Both workloads are now running (unreserved with fewer GPUs) +
-&#10003; nvidia-smi shows GPU allocation in both pods
+&#10003; We saw the preemption event in the terminal +
+&#10003; nvidia-smi shows GPU allocation in the reserved workload +
+&#10003; We saw the preempted workload in the Booking App
 
 == Exercise 3: Test MIG partition preemption
 
-Preemption also works with MIG partitions. Let's test with MIG-1g.18gb devices.
+Preemption also works with MIG partitions. Let's test with MIG-1g.10gb devices. Lets quickly run through the steps to deploy a MIG workload and see the preemption in action.
 
 [IMPORTANT]
 ====
@@ -294,16 +296,16 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 ----
 ====
 
-. Deploy an unreserved workload consuming 16 MIG-1g.18gb partitions:
+. Deploy an unreserved workload consuming 16 MIG-1g.10gb partitions:
 +
 [source,console,role=execute,subs=attributes+]
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
   --set kind=Deployment \
-  --set name=gpu-fake-18gb \
+  --set name=gpu-fake-10gb \
   --set replicas=1 \
   --set gpuCount=16 \
-  --set gpuResourceType=nvidia.com/mig-1g.18gb \
+  --set gpuResourceType=nvidia.com/mig-1g.10gb \
   --set reserved=false \
   | oc -n user-{user-user1} apply -f-
 ----
@@ -312,7 +314,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} rollout status deployment/gpu-fake-18gb --timeout=60s
+oc -n user-{user-user1} rollout status deployment/gpu-fake-10gb --timeout=60s
 ----
 
 [IMPORTANT]
@@ -332,10 +334,10 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 ----
 helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user2} \
   --set kind=Deployment \
-  --set name=gpu-fake-18gb \
+  --set name=gpu-fake-10gb \
   --set replicas=1 \
   --set gpuCount=8 \
-  --set gpuResourceType=nvidia.com/mig-1g.18gb \
+  --set gpuResourceType=nvidia.com/mig-1g.10gb \
   --set reserved=true \
   | oc -n user-{user-user2} apply -f-
 ----
@@ -344,18 +346,18 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} rollout status deployment/gpu-fake-18gb --timeout=60s
+oc -n user-{user-user2} rollout status deployment/gpu-fake-10gb --timeout=60s
 ----
 
 . Check nvidia-smi on the MIG workloads:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-18gb -o name | head -1) -- nvidia-smi
-oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-18gb -o name | head -1) -- nvidia-smi
+oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-10gb -o name | head -1) -- nvidia-smi
+oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-10gb -o name | head -1) -- nvidia-smi
 ----
 +
-Notice the MIG partition size (18 GB) shown in nvidia-smi output.
+Notice the MIG partition size (10 GB) shown in nvidia-smi output.
 
 === Verify
 
@@ -381,7 +383,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 [source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user1} delete deployment gpu-fake-gpu
-oc -n user-{user-user1} delete deployment gpu-fake-18gb
+oc -n user-{user-user1} delete deployment gpu-fake-10gb
 ----
 
 === {user-user2}: Delete workloads
@@ -401,7 +403,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 [source,console,role=execute,subs=attributes+]
 ----
 oc -n user-{user-user2} delete deployment gpu-fake-gpu
-oc -n user-{user-user2} delete deployment gpu-fake-18gb
+oc -n user-{user-user2} delete deployment gpu-fake-10gb
 ----
 
 . Verify all GPU resources are free:
