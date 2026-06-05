@@ -296,7 +296,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 ----
 ====
 
-. Deploy an unreserved workload consuming 16 MIG-1g.10gb partitions:
+. Deploy an unreserved workload consuming 56 MIG-1g.10gb partitions:
 +
 [source,console,role=execute,subs=attributes+]
 ----
@@ -304,7 +304,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set kind=Deployment \
   --set name=gpu-fake-10gb \
   --set replicas=1 \
-  --set gpuCount=16 \
+  --set gpuCount=56 \
   --set gpuResourceType=nvidia.com/mig-1g.10gb \
   --set reserved=false \
   | oc -n user-{user-user1} apply -f-
