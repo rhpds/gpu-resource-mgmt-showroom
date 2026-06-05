@@ -6,7 +6,7 @@ Congratulations on completing the GPU Resource Management on OpenShift workshop!
 == What you accomplished
 
 **Module 1: Fake GPU Cluster Setup** +
-Explored the fake-gpu-operator, inspected GPU topology, and deployed pods consuming simulated H200 GPUs and MIG partitions.
+Explored the fake-gpu-operator, inspected GPU topology, and deployed pods consuming simulated NVL GPUs and MIG partitions.
 
 **Module 2: GPU Booking App** +
 Used the OpenShift Console plugin to reserve GPU time slots and observed the Kueue resources created by the reservation sync.
