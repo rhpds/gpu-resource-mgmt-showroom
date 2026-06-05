@@ -416,6 +416,20 @@ oc get cq,lq -A | grep user-{user-user1}
 +
 Only `unreserved` and `default` should be shown. The per-user `reserved` ClusterQueue and LocalQueue have been cleaned up.
 
+. Delete the workbench storage:
++
+[source,console,role=execute,subs=attributes+]
+----
+oc -n user-{user-user1} delete pvc gpu-workbench-storage
+----
++
+Expected output:
++
+[source,text]
+----
+persistentvolumeclaim "gpu-workbench-storage" deleted
+----
+
 === Verify
 
 &#10003; Workbench deleted +
