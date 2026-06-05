@@ -218,9 +218,12 @@ oc -n user-{user-user1} wait pod/mig-test --for=condition=Ready --timeout=60s
 oc -n user-{user-user1} exec mig-test -- nvidia-smi
 ----
 +
-Notice the nvidia-smi output shows the MIG partition size `10240MiB` rather than the full GPU memory.
+Notice the nvidia-smi output shows the MIG partition size `10240MiB` rather than the full GPU memory. You should also be able to see the MIG workload in the Bookings dashboard.
++
+image::mig-workload-bookings.png[MIG Workload in Bookings,link=self,window=blank,width=700]
 +
 NOTE: MIG resource types vary by GPU profile. If your cluster is running a non-MIG profile (L40S, T4), first switch to a MIG-capable profile using the GPU Config Plugin. See the xref:08-quickstart.adoc[Quickstart module] for more details.
+
 
 . Clean up both test pods:
 +
