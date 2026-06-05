@@ -389,6 +389,17 @@ Return to the OpenShift Console as {user-user2}.
 
 image::qs-cancel-booking.png[GPU Booking My Bookings with Cancel All button,link=self,window=blank,width=700]
 
+[IMPORTANT]
+====
+**Acting as: `{user-user2}`** +
+Switch to the {user-user2} CLI context:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -p {password}
+----
+====
+
 . Verify that the Kueue resources for {user-user2} are removed:
 +
 [source,console,role=execute,subs=attributes+]
