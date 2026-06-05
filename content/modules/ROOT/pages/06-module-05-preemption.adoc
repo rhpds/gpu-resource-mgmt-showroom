@@ -235,6 +235,14 @@ QUEUE:.spec.queueName,\
 ADMISSION:.status.admission.clusterQueue,\
 ADMITTED:.status.conditions[0].status
 ----
++
+Expected output:
++
+[source,text]
+----
+NAMESPACE    NAME                                             QUEUE      RESERVED IN   ADMITTED   FINISHED   AGE
+user-user2   workload.kueue.x-k8s.io/pod-gpu-fake-gpu-54959878d8-nclg6-a68ff   reserved                                       38s
+----
 
 . Verify the reserved workload is running:
 +
@@ -242,18 +250,28 @@ ADMITTED:.status.conditions[0].status
 ----
 oc -n user-{user-user2} rollout status deployment/gpu-fake-gpu --timeout=60s
 ----
++
+Expected output:
++
+[source,text]
+----
+deployment "gpu-fake-gpu" successfully rolled out
+----
 
-. Check nvidia-smi on both workloads:
+. Check nvidia-smi on the reserved workload:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 ----
++
+You should see the nvidia-smi output for the reserved workload.
 
 . We can also check the workload status in the Booking App.
 +
 image::preempted-workload-1.png[Reserved Workload Preempted Unreserved Workload,link=self,window=blank,width=700]
++
+You should see the reserved workload is running (red) and the preemption event is shown in the console as well.
 
 === Verify
 
