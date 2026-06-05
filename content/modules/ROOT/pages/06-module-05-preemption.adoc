@@ -333,7 +333,14 @@ NAME                             READY   STATUS            RESTARTS   AGE
 gpu-fake-10gb-5d687f5d44-gxncs   1/1     Running           0          7s
 gpu-fake-gpu-54959878d8-m4zdc    0/1     SchedulingGated   0          21m
 ----
-+ We can see the full GPU is `SchedulingGated` (it is still preempted) and the MIG workload is `Running`.
++
+We can see the full GPU is `SchedulingGated` (it is still preempted) and the MIG workload is `Running`.
+
+. We can also check the workload status in the Booking App.
++
+image::unreserved-56.png[Unreserved MIG Workload Running with 56 MIG Partitions,link=self,window=blank,width=700]
++
+You should see the **{user-user2}** reserved workload is running (red) and the unreserved MIG workload in (green).
 
 [IMPORTANT]
 ====
