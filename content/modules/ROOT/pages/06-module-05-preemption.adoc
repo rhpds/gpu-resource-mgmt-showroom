@@ -340,7 +340,15 @@ We can see the full GPU is `SchedulingGated` (it is still preempted) and the MIG
 +
 image::unreserved-56.png[Unreserved MIG Workload Running with 56 MIG Partitions,link=self,window=blank,width=700]
 +
-You should see the **{user-user2}** reserved workload is running (red) and the unreserved MIG workload in (green).
+You should see the **{user-user2}** reserved workload is running (red) and the **{user-user1}** unreserved MIG workload in (green).
+
+[IMPORTANT]
+====
+**Acting as: `{user-user2}`** +
+Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-user2}` and password `{password}`.
+====
+
+. Open the **GPU Booking** > **Bookings** page in the OpenShift Console and book 8 MIG-1g.10gb partitions for today.
 
 [IMPORTANT]
 ====
