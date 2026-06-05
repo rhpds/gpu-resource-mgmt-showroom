@@ -165,7 +165,7 @@ Select the number of GPUs and MIG partitions you want to reserve, add a descript
 
 &#10003; Reservation appears in the booking calendar +
 &#10003; User-specific ClusterQueue exists with `nominalQuota` matching your reservation +
-&#10003; LocalQueue created in your namespace
+&#10003; LocalQueue created in your namespace +
 &#10003; Bulk booking reservations can be created by right clicking on the calendar
 
 == Exercise 3: Understand reserved vs. consumed bookings
@@ -187,6 +187,17 @@ There are two types of bookings in the system:
 
 Let's see this in practice. You reserved 4 GPUs in Exercise 2, but now you'll deploy a workload requesting **6** -- more than your reservation. This is allowed, and understanding _why_ is key to understanding the Kueue Cohort model.
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 . Deploy a pod requesting **6** full GPUs to the reserved queue:
 +
 [source,console,role=execute,subs=attributes+]
@@ -200,6 +211,8 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set reserved=true \
   | oc -n user-{user-user1} apply -f-
 ----
++
+You can also see the workload in the Bookings dashboard.
 +
 image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
 
