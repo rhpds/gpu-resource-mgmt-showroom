@@ -51,7 +51,7 @@ Log in to the OpenShift CLI:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-user1} -p {password}
+oc login $(oc whoami --show-server) -u {user-user1} -p {password}
 ----
 ====
 
@@ -106,7 +106,7 @@ Log in to the OpenShift CLI:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-2} -p {password}
+oc login $(oc whoami --show-server) -u {user-2} -p {password}
 ----
 ====
 
@@ -179,7 +179,7 @@ Switch to the {user-user1} CLI context:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-user1} -p {password}
+oc login $(oc whoami --show-server) -u {user-user1} -p {password}
 ----
 ====
 
@@ -211,7 +211,7 @@ Switch to the {user-2} CLI context:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-2} -p {password}
+oc login $(oc whoami --show-server) -u {user-2} -p {password}
 ----
 ====
 
@@ -261,7 +261,7 @@ Notice the MIG partition size (18 GB) shown in nvidia-smi output.
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-user1} -p {password}
+oc login $(oc whoami --show-server) -u {user-user1} -p {password}
 ----
 ====
 
@@ -281,7 +281,7 @@ oc -n user-{user-user1} delete deployment gpu-fake-18gb
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc login {openshift_api_url} -u {user-2} -p {password}
+oc login $(oc whoami --show-server) -u {user-2} -p {password}
 ----
 ====
 
