@@ -105,7 +105,7 @@ You should see `Login successful` and the list of accessible projects.
 
 === Deploy workload
 
-. Deploy a workload requesting 24 full GPUs to the unreserved cluster queue:
+. Deploy a workload requesting 8 full GPUs to the unreserved cluster queue:
 +
 [source,console,role=execute,subs=attributes+]
 ----
@@ -113,7 +113,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set kind=Deployment \
   --set name=gpu-fake-gpu \
   --set replicas=1 \
-  --set gpuCount=24 \
+  --set gpuCount=8 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=false \
   | oc -n user-{user-user1} apply -f-
@@ -151,7 +151,7 @@ deployment "gpu-fake-gpu" successfully rolled out
 oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name) -- nvidia-smi
 ----
 +
-You should see 24 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. Each row represents one simulated GPU with its memory usage and utilization.
+You should see 8 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. Each row represents one simulated GPU with its memory usage and utilization.
 
 . Check the Kueue resources:
 +
@@ -187,8 +187,8 @@ image::qs-user1-workload-running.png[GPU Booking showing 8 GPUs consumed by {use
 === Verify
 
 &#10003; Deployment `gpu-fake-gpu` is running in `{user-user1}` namespace +
-&#10003; `nvidia-smi` shows 24 GPUs allocated +
-&#10003; GPU Booking shows 24/24 full GPUs consumed +
+&#10003; `nvidia-smi` shows 8 GPUs allocated +
+&#10003; GPU Booking shows 8/8 full GPUs consumed +
 &#10003; RHOAI dashboard is accessible
 
 == Exercise 3: Reserve a GPU and create a workbench ({user-user2})
@@ -205,7 +205,7 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Scroll down to the calendar and click on **today's date**.
 
-. In the slot grid below the calendar, find the **NVIDIA GB200 NVL Full GPU** row. All 24 units show `{user-user1}` consumed.
+. In the slot grid below the calendar, find the **NVIDIA GB200 NVL Full GPU** row. All 8 units show `{user-user1}` consumed.
 
 . Click **Override** on one of the consumed slots to create a reservation that will preempt the unreserved workload.
 
