@@ -264,6 +264,17 @@ image::hwprofiles-workbench.png[Hardware Profiles workbench,link=self,window=bla
 
 === Patch the workbench for fake nvidia-smi
 
+[IMPORTANT]
+====
+**Acting as: `{user-user1}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
+----
+====
+
 The fake-gpu-operator's `nvidia-smi` binary needs the `NODE_NAME` environment variable to look up the GPU topology for the node. RHOAI workbenches don't set this by default, so we need to patch the Notebook CR to inject it.
 
 . Patch the workbench to add the `NODE_NAME` environment variable:
