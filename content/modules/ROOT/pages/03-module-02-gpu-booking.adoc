@@ -152,11 +152,14 @@ oc -n user-{user-user1} get localqueues
 +
 You should see a new LocalQueue called `reserved` pointing to your user's ClusterQueue.
 
+[TIP]
+====
 You can also bulk book reservations of multiple GPUs and MIG partitions by right clicking on the calendar.
 
 image::bulk-booking.png[Bulk Booking,link=self,window=blank,width=700]
 
 Select the number of GPUs and MIG partitions you want to reserve, add a description so other users can understand your booking and click **Book** to create the booking.
+====
 
 === Verify
 
