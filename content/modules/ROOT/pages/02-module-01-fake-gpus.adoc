@@ -224,7 +224,6 @@ image::mig-workload-bookings.png[MIG Workload in Bookings,link=self,window=blank
 +
 NOTE: MIG resource types vary by GPU profile. If your cluster is running a non-MIG profile (L40S, T4), first switch to a MIG-capable profile using the GPU Config Plugin. See the xref:08-quickstart.adoc[Quickstart module] for more details.
 
-
 . Clean up both test pods:
 +
 [source,console,role=execute,subs=attributes+]
