@@ -251,6 +251,10 @@ oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-g
 oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 ----
 
+. We can also check the workload status in the Booking App.
++
+image::preempted-workload-1.png[Reserved Workload Preempted Unreserved Workload,link=self,window=blank,width=700]
+
 === Verify
 
 &#10003; Reserved workload preempted the unreserved workload +
