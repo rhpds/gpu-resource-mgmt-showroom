@@ -23,6 +23,7 @@ image::kueue-resource-hierarchy.png[Kueue Resource Hierarchy,link=self,window=bl
 
 The workshop cluster configures Kueue resources in a flat Cohort model:
 
+[source,text]
 ----
 Cohort: unreserved
 ├── ClusterQueue: unreserved        (borrows from cohort, no preemption rights)
