@@ -174,13 +174,7 @@ A https://kueue.sigs.k8s.io/docs/concepts/resource_flavor[ResourceFlavor^] tells
 
 [IMPORTANT]
 ====
-**Acting as: `{user-user1}`** +
-Log in to the OpenShift CLI:
-
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
-----
+**Acting as: `{user-user1}`**
 ====
 
 . List ResourceFlavors:
@@ -245,13 +239,7 @@ You can use Topology to enable https://kueue.sigs.k8s.io/docs/concepts/topology_
 
 [IMPORTANT]
 ====
-**Acting as: `{user-user1}`** +
-Log in to the OpenShift CLI:
-
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
-----
+**Acting as: `{user-user1}`**
 ====
 
 . Submit a GPU workload to the unreserved queue:
@@ -326,13 +314,7 @@ The https://kueue.sigs.k8s.io/docs/concepts/cohort[Cohort^] is the key to resour
 
 [IMPORTANT]
 ====
-**Acting as: `{user-user1}`** +
-Log in to the OpenShift CLI:
-
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
-----
+**Acting as: `{user-user1}`**
 ====
 
 === Cohort resources are ADDITIVE to CQ resources

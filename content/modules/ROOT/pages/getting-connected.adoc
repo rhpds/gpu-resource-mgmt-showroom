@@ -8,17 +8,8 @@ In this activity, you will connect to your workshop environment and verify acces
 [IMPORTANT]
 ====
 **Acting as: `{user-admin}`** (cluster admin) +
-Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-admin}` and password `{password}`.
+Log in to the OpenShift Console in the right panel: `{openshift_console_url}` with username `{user-admin}` and password `{password}`.
 ====
-
-. Open the OpenShift Console in the right panel or navigate to:
-+
-`{openshift_console_url}`
-
-. Log in with the following credentials:
-+
-**Username:** `{user-admin}` +
-**Password:** `{password}`
 
 == Log in from the command line
 

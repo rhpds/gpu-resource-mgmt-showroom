@@ -298,13 +298,7 @@ NOTE: This patch is only needed because we are using the fake-gpu-operator. On a
 
 [IMPORTANT]
 ====
-**Acting as: `{user-user1}`** +
-Log in to the OpenShift CLI:
-
-[source,console,role=execute,subs=attributes+]
-----
-oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -p {password}
-----
+**Acting as: `{user-user1}`**
 ====
 
 . From the CLI, verify the workbench pod has the GPU allocated:
