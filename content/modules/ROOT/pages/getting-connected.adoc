@@ -82,7 +82,7 @@ You should see the `default`, ClusterQueue.
 oc get project user-{user-user1} user-{user-user2}
 ----
 +
-You should see the user namespaces `{user-user1}` and `{user-user2}`.
+You should see the user namespaces `user-{user-user1}` and `user-{user-user2}`.
 
 . Check LocalQueues in the user namespace:
 +

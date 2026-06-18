@@ -3,7 +3,7 @@
 
 Congratulations on completing the GPU Resource Management on OpenShift workshop!
 
-== What you accomplished
+== What You've Learned
 
 **Module 1: Fake GPU Cluster Setup** +
 Explored the fake-gpu-operator, inspected GPU topology, and deployed pods consuming simulated NVL GPUs and MIG partitions.

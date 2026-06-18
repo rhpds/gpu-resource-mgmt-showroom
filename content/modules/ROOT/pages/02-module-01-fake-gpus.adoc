@@ -190,7 +190,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 ----
 ====
 
-. Deploy a pod requesting a MIG 1g.18gb partition:
+. Deploy a pod requesting a MIG 1g.10gb partition:
 +
 [source,console,role=execute,subs=attributes+]
 ----
