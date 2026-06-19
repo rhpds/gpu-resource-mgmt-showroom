@@ -355,7 +355,7 @@ With 1 GPU reserved, the three sources of quota look like this:
 | 0
 | 1
 
-| `nvidia.com/mig-1g.10gb`
+| `nvidia.com/mig-1g.23gb`
 | 56
 | 0
 | 0

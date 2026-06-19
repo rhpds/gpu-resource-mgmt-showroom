@@ -78,10 +78,10 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 
 . Review the available GPU resource types (this will depend on the GPU profile you are using):
 * **GB200 NVL Full GPU** -- `nvidia.com/gpu` (8 available)
-* **MIG 7g.80gb** -- `nvidia.com/mig-7g.40gb` (8 available)
-* **MIG 3g.20gb** -- `nvidia.com/mig-3g.20gb` (16 available)
-* **MIG 2g.10gb** -- `nvidia.com/mig-2g.10gb` (16 available)
-* **MIG 1g.10gb** -- `nvidia.com/mig-1g.10gb` (56 available)
+* **MIG 7g.189gb** -- `nvidia.com/mig-7g.189gb` (8 available)
+* **MIG 3g.93gb** -- `nvidia.com/mig-3g.93gb` (16 available)
+* **MIG 2g.47gb** -- `nvidia.com/mig-2g.47gb` (16 available)
+* **MIG 1g.23gb** -- `nvidia.com/mig-1g.23gb` (56 available)
 
 === Verify
 
