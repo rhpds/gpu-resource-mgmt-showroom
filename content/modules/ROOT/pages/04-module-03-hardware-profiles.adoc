@@ -83,10 +83,10 @@ Log in to the OpenShift Console at `{openshift_console_url}` with username `{use
 | GB200 NVL Full GPU
 | 8
 
-| MIG 3g.40gb
+| MIG 3g.93gb
 | 4
 
-| MIG 1g.10gb
+| MIG 1g.23gb
 | 4
 |===
 
@@ -125,17 +125,17 @@ You should see five **reserved** profiles -- one for the full GPU and one for ea
 | `reserved-gpu`
 | `nvidia.com/gpu`
 
-| `reserved-mig-80gb`
-| `nvidia.com/mig-7g.80gb`
+| `reserved-mig-189gb`
+| `nvidia.com/mig-7g.189gb`
 
-| `reserved-mig-40gb`
-| `nvidia.com/mig-3g.40gb`
+| `reserved-mig-93gb`
+| `nvidia.com/mig-3g.93gb`
 
-| `reserved-mig-20gb`
-| `nvidia.com/mig-2g.20gb`
+| `reserved-mig-47gb`
+| `nvidia.com/mig-2g.47gb`
 
-| `reserved-mig-10gb`
-| `nvidia.com/mig-1g.10gb`
+| `reserved-mig-23gb`
+| `nvidia.com/mig-1g.23gb`
 |===
 +
 The booking app creates a profile for every MIG slice size defined in the GPU topology, not just the ones you explicitly reserved. This means data scientists see the full range of GPU partition options when creating a workbench.
@@ -157,10 +157,10 @@ Note that the profile specifies:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} get hardwareprofile reserved-mig-10gb -o yaml
+oc -n user-{user-user1} get hardwareprofile reserved-mig-23gb -o yaml
 ----
 +
-The MIG profile requests a smaller GPU partition (`nvidia.com/mig-1g.10gb: 1`). A data scientist choosing this profile gets a MIG slice instead of a full GPU -- useful for inference or lightweight training tasks that don't need an entire GPU.
+The MIG profile requests a smaller GPU partition (`nvidia.com/mig-1g.23gb: 1`). A data scientist choosing this profile gets a MIG slice instead of a full GPU -- useful for inference or lightweight training tasks that don't need an entire GPU.
 
 . Verify all reserved profiles point to the same reserved LocalQueue:
 +

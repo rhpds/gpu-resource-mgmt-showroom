@@ -58,6 +58,8 @@ The following GPU profiles are available:
 | h200 | NVIDIA H200 | 141 GiB | Yes | Hopper
 | b200 | NVIDIA B200 | 192 GiB | Yes | Blackwell
 | gb200 | NVIDIA GB200 NVL | 192 GiB | Yes | Blackwell
+| gb300 | NVIDIA GB300 NVL72 | 288 GiB | Yes | Blackwell Ultra
+| vera-rubin | NVIDIA Vera Rubin NVL | 288 GiB | No | Rubin
 | l40s | NVIDIA L40S | 48 GiB | No | Ada Lovelace
 | t4 | NVIDIA T4 | 16 GiB | No | Turing
 |===

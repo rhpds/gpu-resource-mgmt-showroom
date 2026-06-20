@@ -190,7 +190,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 ----
 ====
 
-. Deploy a pod requesting a MIG 1g.10gb partition:
+. Deploy a pod requesting a MIG 1g.23gb partition:
 +
 [source,console,role=execute,subs=attributes+]
 ----
@@ -199,7 +199,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
   --set name=mig-test \
   --set replicas=1 \
   --set gpuCount=1 \
-  --set gpuResourceType=nvidia.com/mig-1g.10gb \
+  --set gpuResourceType=nvidia.com/mig-1g.23gb \
   --set reserved=false \
   | oc -n user-{user-user1} apply -f-
 ----
@@ -218,7 +218,7 @@ oc -n user-{user-user1} wait pod/mig-test --for=condition=Ready --timeout=60s
 oc -n user-{user-user1} exec mig-test -- nvidia-smi
 ----
 +
-Notice the nvidia-smi output shows the MIG partition size `10240MiB` rather than the full GPU memory. You should also be able to see the MIG workload in the Bookings dashboard.
+Notice the nvidia-smi output shows the MIG partition size `23552MiB` rather than the full GPU memory. You should also be able to see the MIG workload in the Bookings dashboard.
 +
 image::mig-workload-bookings.png[MIG Workload in Bookings,link=self,window=blank,width=700]
 +
@@ -233,7 +233,7 @@ oc -n user-{user-user1} delete pod gpu-test mig-test
 
 === Verify
 
-&#10003; MIG pod started with `nvidia.com/mig-1g.10gb` resource +
+&#10003; MIG pod started with `nvidia.com/mig-1g.23gb` resource +
 &#10003; nvidia-smi shows MIG partition info +
 &#10003; Both pods cleaned up
 
