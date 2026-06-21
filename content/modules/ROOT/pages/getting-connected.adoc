@@ -71,7 +71,7 @@ You should see the Kueue controller and operator pods.
 oc get clusterqueues -A
 ----
 +
-You should see the `default`, ClusterQueue.
+You should see the `default` ClusterQueue.
 
 == Verify your namespaces
 
