@@ -2,7 +2,7 @@
 
 Welcome to the GPU Resource Management workshop! In this hands-on session, you'll learn how to simulate GPU hardware, manage GPU reservations through a booking interface, and control workload scheduling with Kueue -- all on OpenShift with Red Hat OpenShift AI.
 
-This workshop uses **fake GPUs** -- simulated NVIDIA H200 accelerators running on CPU-only nodes -- so you can learn GPU resource management patterns without needing real GPU hardware. Everything you learn here applies directly to production GPU clusters.
+This workshop uses **fake GPUs** -- simulated GPU accelerators running on CPU-only nodes -- so you can learn GPU resource management patterns without needing real GPU hardware. Everything you learn here applies directly to production GPU clusters.
 
 == What you'll learn
 
