@@ -56,11 +56,6 @@ We have configured reservation guarantees to ensure that user reservations are n
 
 Other designs are possible, the Booking App is one of many possible implementations of the Kueue Cohort model. We cover the Kueue Cohort model in more detail in Module 4.
 
-[NOTE]
-====
-The exercises below use the **NVIDIA GB200 NVL** profile. If you are not using this profile, you will need to switch to it using the GPU Config Plugin. See the xref:08-quickstart.adoc[Quickstart module] for more details. You may use other profiles if you wish - however you will need to adjust the commands accordingly.
-====
-
 == Exercise 1: Open the GPU Booking App
 
 [IMPORTANT]
