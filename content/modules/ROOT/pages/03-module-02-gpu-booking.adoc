@@ -196,7 +196,7 @@ helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-
 ----
 oc -n user-{user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
 ----
-
++
 You can also see the workload in the Bookings dashboard.
 +
 image::consumed-6-gpu.png[6 GPUs Consumed,link=self,window=blank,width=700]
