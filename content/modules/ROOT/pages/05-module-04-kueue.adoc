@@ -328,7 +328,8 @@ A critical detail of Kueue's design: the total capacity available to a ClusterQu
 ----
 oc get cohort unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
-+ You should see that it owns 7/8 GPUs in the cluster and all the MIG partitions.
++
+You should see that it owns 7/8 GPUs in the cluster and all the MIG partitions.
 
 . Compare with the `unreserved` ClusterQueue's nominalQuota:
 +
