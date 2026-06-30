@@ -397,7 +397,7 @@ oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-g
 oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-23gb -o name | head -1) -- nvidia-smi
 ----
 +
-Notice the MIG partition size (10 GB) shown in nvidia-smi output.
+Notice the MIG partition size (23 GB) shown in nvidia-smi output.
 
 === Verify
 
