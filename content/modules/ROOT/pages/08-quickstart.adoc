@@ -115,14 +115,14 @@ You should see `Login successful` and the list of accessible projects.
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user1} \
   --set kind=Deployment \
   --set name=gpu-fake-gpu \
   --set replicas=1 \
   --set gpuCount=8 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=false \
-  | oc -n user-{user-user1} apply -f-
+  | oc -n {tenant}-user-{user-user1} apply -f-
 ----
 +
 Expected output:
@@ -138,7 +138,7 @@ This renders a Helm chart locally and pipes the resulting Deployment manifest in
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=120s
+oc -n {tenant}-user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=120s
 ----
 +
 Expected output:
@@ -154,7 +154,7 @@ deployment "gpu-fake-gpu" successfully rolled out
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name) -- nvidia-smi
+oc -n {tenant}-user-{user-user1} exec $(oc -n {tenant}-user-{user-user1} get pod -l app=gpu-fake-gpu -o name) -- nvidia-smi
 ----
 +
 You should see 8 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. Each row represents one simulated GPU with its memory usage and utilization.
@@ -316,7 +316,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} get pods
+oc -n {tenant}-user-{user-user1} get pods
 ----
 +
 Expected output:
@@ -358,7 +358,7 @@ Return to the RHOAI dashboard as {user-user2}.
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} get pods
+oc -n {tenant}-user-{user-user1} get pods
 ----
 +
 Expected output:
@@ -400,7 +400,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} get cq,lq,hardwareprofile
+oc -n {tenant}-user-{user-user2} get cq,lq,hardwareprofile
 ----
 +
 Expected output:
@@ -436,7 +436,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} delete deployment gpu-fake-gpu
+oc -n {tenant}-user-{user-user1} delete deployment gpu-fake-gpu
 ----
 +
 Expected output:
@@ -462,7 +462,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} delete pvc fake-gpu-workbench-storage
+oc -n {tenant}-user-{user-user2} delete pvc fake-gpu-workbench-storage
 ----
 +
 Expected output:

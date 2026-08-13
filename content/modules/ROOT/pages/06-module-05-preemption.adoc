@@ -62,14 +62,14 @@ First, let's consume GPU resources with unreserved workloads.
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user1} \
   --set kind=Deployment \
   --set name=gpu-fake-gpu \
   --set replicas=1 \
   --set gpuCount=8 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=false \
-  | oc -n user-{user-user1} apply -f-
+  | oc -n {tenant}-user-{user-user1} apply -f-
 ----
 +
 Expected output:
@@ -83,7 +83,7 @@ deployment.apps/gpu-fake-gpu created
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=60s
+oc -n {tenant}-user-{user-user1} rollout status deployment/gpu-fake-gpu --timeout=60s
 ----
 +
 Expected output:
@@ -115,7 +115,7 @@ Expected output:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} exec $(oc -n user-{user-user1} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
+oc -n {tenant}-user-{user-user1} exec $(oc -n {tenant}-user-{user-user1} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 ----
 +
 You should see 8 NVIDIA GB200 NVL GPUs listed in the `nvidia-smi` output table. Each row represents one simulated GPU with its memory usage and utilization.
@@ -150,14 +150,14 @@ Now deploy a reserved workload from a different user. This simulates a user with
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user2} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user2} \
   --set kind=Deployment \
   --set name=gpu-fake-gpu \
   --set replicas=1 \
   --set gpuCount=1 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=true \
-  | oc -n user-{user-user2} apply -f-
+  | oc -n {tenant}-user-{user-user2} apply -f-
 ----
 +
 Expected output:
@@ -171,7 +171,7 @@ deployment.apps/gpu-fake-gpu created
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} get pods,workload
+oc -n {tenant}-user-{user-user2} get pods,workload
 ----
 +
 Expected output:
@@ -250,7 +250,7 @@ user-user2   pod-gpu-fake-gpu-74868b8b79-c8hlg-af2e1   reserved     user-user2  
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} rollout status deployment/gpu-fake-gpu --timeout=60s
+oc -n {tenant}-user-{user-user2} rollout status deployment/gpu-fake-gpu --timeout=60s
 ----
 +
 Expected output:
@@ -264,7 +264,7 @@ deployment "gpu-fake-gpu" successfully rolled out
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
+oc -n {tenant}-user-{user-user2} exec $(oc -n {tenant}-user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
 ----
 +
 You should see the nvidia-smi output for the reserved workload.
@@ -301,28 +301,28 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user1} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user1} \
   --set kind=Deployment \
   --set name=gpu-fake-23gb \
   --set replicas=1 \
   --set gpuCount=56 \
   --set gpuResourceType=nvidia.com/mig-1g.23gb \
   --set reserved=false \
-  | oc -n user-{user-user1} apply -f-
+  | oc -n {tenant}-user-{user-user1} apply -f-
 ----
 
 . Wait for deployment:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} rollout status deployment/gpu-fake-23gb --timeout=60s
+oc -n {tenant}-user-{user-user1} rollout status deployment/gpu-fake-23gb --timeout=60s
 ----
 
 . Check the running pods:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} get pods
+oc -n {tenant}-user-{user-user1} get pods
 ----
 +
 Expected output:
@@ -368,21 +368,21 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n user-{user-user2} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user2} \
   --set kind=Deployment \
   --set name=gpu-fake-23gb \
   --set replicas=1 \
   --set gpuCount=8 \
   --set gpuResourceType=nvidia.com/mig-1g.23gb \
   --set reserved=true \
-  | oc -n user-{user-user2} apply -f-
+  | oc -n {tenant}-user-{user-user2} apply -f-
 ----
 
 . Watch preemption and verify both are running:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} rollout status deployment/gpu-fake-23gb --timeout=60s
+oc -n {tenant}-user-{user-user2} rollout status deployment/gpu-fake-23gb --timeout=60s
 ----
 
 . We should now see both **{user-user2}** reserved workloads running and **{user-user1}** unreserved workloads preempted in the Booking App.
@@ -393,8 +393,8 @@ image::preempted-2.png[Preempted 2 Unreserved MIG Workloads by Reserved MIG Work
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
-oc -n user-{user-user2} exec $(oc -n user-{user-user2} get pod -l app=gpu-fake-23gb -o name | head -1) -- nvidia-smi
+oc -n {tenant}-user-{user-user2} exec $(oc -n {tenant}-user-{user-user2} get pod -l app=gpu-fake-gpu -o name | head -1) -- nvidia-smi
+oc -n {tenant}-user-{user-user2} exec $(oc -n {tenant}-user-{user-user2} get pod -l app=gpu-fake-23gb -o name | head -1) -- nvidia-smi
 ----
 +
 Notice the MIG partition size (23 GB) shown in nvidia-smi output.
@@ -422,8 +422,8 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user1} delete deployment gpu-fake-gpu
-oc -n user-{user-user1} delete deployment gpu-fake-23gb
+oc -n {tenant}-user-{user-user1} delete deployment gpu-fake-gpu
+oc -n {tenant}-user-{user-user1} delete deployment gpu-fake-23gb
 ----
 
 === {user-user2}: Delete workloads
@@ -442,8 +442,8 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user2} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n user-{user-user2} delete deployment gpu-fake-gpu
-oc -n user-{user-user2} delete deployment gpu-fake-23gb
+oc -n {tenant}-user-{user-user2} delete deployment gpu-fake-gpu
+oc -n {tenant}-user-{user-user2} delete deployment gpu-fake-23gb
 ----
 
 . Verify all GPU resources are free:
