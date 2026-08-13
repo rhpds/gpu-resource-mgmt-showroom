@@ -116,13 +116,13 @@ image::book-4-gpu.png[4 GPUs Booked,link=self,window=blank,width=700]
 oc get clusterqueues
 ----
 +
-You should see a new ClusterQueue named after your user (e.g., `{tenant}-user-{user-user1}`).
+You should see a new ClusterQueue named after your user (e.g., `{user-user1}`).
 
 . Inspect your user's ClusterQueue:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get clusterqueue {tenant}-user-{user-user1} -o yaml | grep -A 20 "resourceGroups"
+oc -n {user-user1} get clusterqueue {user-user1} -o yaml | grep -A 20 "resourceGroups"
 ----
 +
 The `nominalQuota` shows the GPU resources you reserved. You should see `nominalQuota: "4"` -- this is your protected allocation. The cpu and memo are calculated by the booking app based on the GPU resource type you reserved and are a percentage of the total resources available.
@@ -131,7 +131,7 @@ The `nominalQuota` shows the GPU resources you reserved. You should see `nominal
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get localqueues
+oc -n {user-user1} get localqueues
 ----
 +
 You should see a new LocalQueue called `reserved` pointing to your user's ClusterQueue.
@@ -180,21 +180,21 @@ Let's see this in practice. You reserved 4 GPUs in Exercise 2, but now you'll de
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user1} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {user-user1} \
   --set kind=Pod \
   --set name=gpu-test \
   --set replicas=1 \
   --set gpuCount=6 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=true \
-  | oc -n {tenant}-user-{user-user1} apply -f-
+  | oc -n {user-user1} apply -f-
 ----
 
 . Wait for the pod to start:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
+oc -n {user-user1} wait pod/gpu-test --for=condition=Ready --timeout=60s
 ----
 +
 You can also see the workload in the Bookings dashboard.
@@ -205,13 +205,13 @@ You should see 4 **red** slots for the reserved GPUs and 2 **green** slots for t
 
 === Why 6 GPUs when only 4 are reserved?
 
-Your ClusterQueue `{tenant}-user-{user-user1}` has `nominalQuota: 4` -- that's your guaranteed, protected allocation. But it also belongs to the `unreserved` Cohort, and Kueue allows ClusterQueues to **borrow** idle resources from their Cohort beyond their nominalQuota.
+Your ClusterQueue `{user-user1}` has `nominalQuota: 4` -- that's your guaranteed, protected allocation. But it also belongs to the `unreserved` Cohort, and Kueue allows ClusterQueues to **borrow** idle resources from their Cohort beyond their nominalQuota.
 
 Inspect the ClusterQueue status to see this in action:
 
 [source,console,role=execute,subs=attributes+]
 ----
-oc get cq {tenant}-user-{user-user1} -o jsonpath='{range .status.flavorsUsage[0].resources[*]}{.name}{"\t"}total={.total}{"\t"}borrowed={.borrowed}{"\n"}{end}'
+oc get cq {user-user1} -o jsonpath='{range .status.flavorsUsage[0].resources[*]}{.name}{"\t"}total={.total}{"\t"}borrowed={.borrowed}{"\n"}{end}'
 ----
 
 You should see output like:
@@ -297,7 +297,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} delete pod gpu-test
+oc -n {user-user1} delete pod gpu-test
 ----
 
 . {user-user1}: Cancel booking

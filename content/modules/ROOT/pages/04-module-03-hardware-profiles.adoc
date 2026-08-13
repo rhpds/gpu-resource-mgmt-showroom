@@ -113,7 +113,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get hardwareprofiles
+oc -n {user-user1} get hardwareprofiles
 ----
 +
 You should see five **reserved** profiles -- one for the full GPU and one for each MIG slice size:
@@ -144,7 +144,7 @@ The booking app creates a profile for every MIG slice size defined in the GPU to
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get hardwareprofile reserved-gpu -o yaml
+oc -n {user-user1} get hardwareprofile reserved-gpu -o yaml
 ----
 +
 Note that the profile specifies:
@@ -157,7 +157,7 @@ Note that the profile specifies:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get hardwareprofile reserved-mig-23gb -o yaml
+oc -n {user-user1} get hardwareprofile reserved-mig-23gb -o yaml
 ----
 +
 The MIG profile requests a smaller GPU partition (`nvidia.com/mig-1g.23gb: 1`). A data scientist choosing this profile gets a MIG slice instead of a full GPU -- useful for inference or lightweight training tasks that don't need an entire GPU.
@@ -166,7 +166,7 @@ The MIG profile requests a smaller GPU partition (`nvidia.com/mig-1g.23gb: 1`). 
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get hardwareprofiles -o custom-columns=\
+oc -n {user-user1} get hardwareprofiles -o custom-columns=\
 NAME:.metadata.name,\
 QUEUE:.spec.scheduling.kueue.localQueueName
 ----
@@ -200,7 +200,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -
 oc get hardwareprofiles -A
 ----
 +
-You should see multiple Hardware Profiles in the `redhat-ods-applications` namespace as well as the `{tenant}-user-{user-user1}` namespace.
+You should see multiple Hardware Profiles in the `redhat-ods-applications` namespace as well as the `{user-user1}` namespace.
 
 . Inspect the unreserved GPU profile:
 +
@@ -281,7 +281,7 @@ The fake-gpu-operator's `nvidia-smi` binary needs the `NODE_NAME` environment va
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} patch notebook gpu-workbench --type='json' \
+oc -n {user-user1} patch notebook gpu-workbench --type='json' \
   -p='[{"op":"add","path":"/spec/template/spec/containers/0/env/-","value":{"name":"NODE_NAME","valueFrom":{"fieldRef":{"fieldPath":"spec.nodeName"}}}}]'
 ----
 +
@@ -289,7 +289,7 @@ This triggers a rolling restart of the workbench pod. Wait for it to reach **Rea
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} rollout status statefulset/gpu-workbench --timeout=120s
+oc -n {user-user1} rollout status statefulset/gpu-workbench --timeout=120s
 ----
 
 NOTE: This patch is only needed because we are using the fake-gpu-operator. On a real GPU cluster with physical NVIDIA GPUs, `nvidia-smi` works without any extra environment variables.
@@ -305,7 +305,7 @@ NOTE: This patch is only needed because we are using the fake-gpu-operator. On a
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} exec $(oc -n {tenant}-user-{user-user1} get pod -l app=gpu-workbench -o name) -- nvidia-smi
+oc -n {user-user1} exec $(oc -n {user-user1} get pod -l app=gpu-workbench -o name) -- nvidia-smi
 ----
 +
 You should see the matching GPU resource you selected as a hardware profile. This confirms the fake-gpu-operator injected `nvidia-smi` into the workbench pod and the GPU resource is allocated.
@@ -314,7 +314,7 @@ You should see the matching GPU resource you selected as a hardware profile. Thi
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get workloads -o custom-columns=\
+oc -n {user-user1} get workloads -o custom-columns=\
 NAME:.metadata.name,\
 QUEUE:.spec.queueName,\
 ADMITTED:.status.conditions[0].status
@@ -396,7 +396,7 @@ oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-user1} -
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get hardwareprofiles
+oc -n {user-user1} get hardwareprofiles
 ----
 +
 The `reserved-*` profiles should no longer appear. The booking app's expiration cleaner removed them along with the per-user ClusterQueue and LocalQueue.
@@ -405,7 +405,7 @@ The `reserved-*` profiles should no longer appear. The booking app's expiration 
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get cq,lq -A | grep {tenant}-user-{user-user1}
+oc get cq,lq -A | grep {user-user1}
 ----
 +
 Only `unreserved` and `default` should be shown. The per-user `reserved` ClusterQueue and LocalQueue have been cleaned up.
@@ -414,7 +414,7 @@ Only `unreserved` and `default` should be shown. The per-user `reserved` Cluster
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} delete pvc gpu-workbench-storage
+oc -n {user-user1} delete pvc gpu-workbench-storage
 ----
 +
 Expected output:

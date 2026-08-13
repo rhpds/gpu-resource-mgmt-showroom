@@ -6,7 +6,7 @@ In this activity, you will connect to your workshop environment and verify acces
 [NOTE]
 ====
 **Your tenant is `{tenant}`.** +
-Your user namespaces are prefixed with `{tenant}-user-`. All GPU bookings, ClusterQueues, and workloads are scoped to your tenant. +
+Your namespaces are named after your username (e.g. `{user-user1}`). All GPU bookings, ClusterQueues, and workloads are scoped to your tenant. +
 Your credentials: admin=`{user-admin}`, user1=`{user-user1}`, user2=`{user-user2}`.
 ====
 
@@ -86,16 +86,16 @@ You should see the `default` ClusterQueue.
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get project {tenant}-user-{user-user1} {tenant}-user-{user-user2}
+oc get project {user-user1} {user-user2}
 ----
 +
-You should see the user namespaces `{tenant}-user-{user-user1}` and `{tenant}-user-{user-user2}`.
+You should see the user namespaces `{user-user1}` and `{user-user2}`.
 
 . Check LocalQueues in the user namespace:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get localqueues
+oc -n {user-user1} get localqueues
 ----
 +
 You should see `default` and `unreserved` LocalQueues.

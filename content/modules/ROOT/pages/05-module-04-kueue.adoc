@@ -146,7 +146,7 @@ Wait for the Reservation Sync to create the user ClusterQueue .
 oc get clusterqueues
 ----
 +
-You should now see a `{tenant}-user-{user-user1}` ClusterQueue alongside `default`, `unreserved` and `unreserved-priority`.
+You should now see a `{user-user1}` ClusterQueue alongside `default`, `unreserved` and `unreserved-priority`.
 
 . Compare the preemption policies:
 +
@@ -159,10 +159,10 @@ The `unreserved` CQ has `reclaimWithinCohort: Never` -- it cannot preempt anyone
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get cq {tenant}-user-{user-user1} -o jsonpath='{.spec.preemption}' | jq .
+oc get cq {user-user1} -o jsonpath='{.spec.preemption}' | jq .
 ----
 +
-The `{tenant}-user-{user-user1}` CQ has `reclaimWithinCohort: Any` -- it can preempt unreserved workloads to reclaim its protected quota. This is the key difference that makes reservations work.
+The `{user-user1}` CQ has `reclaimWithinCohort: Any` -- it can preempt unreserved workloads to reclaim its protected quota. This is the key difference that makes reservations work.
 
 === Verify
 
@@ -247,21 +247,21 @@ You can use Topology to enable https://kueue.sigs.k8s.io/docs/concepts/topology_
 +
 [source,console,role=execute,subs=attributes+]
 ----
-helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {tenant}-user-{user-user1} \
+helm template gpu-deploy oci://quay.io/eformat/gpu-test-workloads -n {user-user1} \
   --set kind=Pod \
   --set name=kueue-test \
   --set replicas=1 \
   --set gpuCount=1 \
   --set gpuResourceType=nvidia.com/gpu \
   --set reserved=false \
-  | oc -n {tenant}-user-{user-user1} apply -f-
+  | oc -n {user-user1} apply -f-
 ----
 
 . Watch the workload admission:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get workloads -w
+oc -n {user-user1} get workloads -w
 ----
 +
 Press `Ctrl+C` after the workload is admitted - you should see `ADMITTED: True` in the output.
@@ -270,7 +270,7 @@ Press `Ctrl+C` after the workload is admitted - you should see `ADMITTED: True` 
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} get workloads -o custom-columns=\
+oc -n {user-user1} get workloads -o custom-columns=\
 NAME:.metadata.name,\
 QUEUE:.spec.queueName,\
 ADMISSION:.status.admission.clusterQueue
@@ -300,7 +300,7 @@ You should see the workload with `total=1` and `borrowed=1` in the `flavorsUsage
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc -n {tenant}-user-{user-user1} delete pod kueue-test
+oc -n {user-user1} delete pod kueue-test
 ----
 
 === Verify
@@ -338,18 +338,18 @@ You should see that it owns 7/8 GPUs in the cluster and all the MIG partitions.
 oc get cq unreserved -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
 +
-The `unreserved` CQ has `nominalQuota: 0` for every resource. It owns nothing -- all its capacity comes from borrowing from the Cohort. Now compare with the user CQ `{tenant}-user-{user-user1}` which is `reserved`:
+The `unreserved` CQ has `nominalQuota: 0` for every resource. It owns nothing -- all its capacity comes from borrowing from the Cohort. Now compare with the user CQ `{user-user1}` which is `reserved`:
 +
 [source,console,role=execute,subs=attributes+]
 ----
-oc get cq {tenant}-user-{user-user1} -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
+oc get cq {user-user1} -o jsonpath='{range .spec.resourceGroups[0].flavors[0].resources[*]}{.name}: {.nominalQuota}{"\n"}{end}'
 ----
 +
 With 1 GPU reserved, the three sources of quota look like this:
 +
 [cols="1,1,1,1",options="header"]
 |===
-| Resource | Cohort | CQ `unreserved` | CQ `{tenant}-user-{user-user1}`
+| Resource | Cohort | CQ `unreserved` | CQ `{user-user1}`
 
 | `nvidia.com/gpu`
 | 7
