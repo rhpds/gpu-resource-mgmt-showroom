@@ -1,38 +1,37 @@
 = Conclusion
 :navtitle: Conclusion
 
-Congratulations on completing the GPU Resource Management on OpenShift workshop!
+Congratulations on completing the GPU Resource Management on OpenShift quickstart!
 
-== What You've Learned
+== What You Accomplished
 
-**Module 1: Fake GPU Cluster Setup** +
-Explored the fake-gpu-operator, inspected GPU topology, and deployed pods consuming simulated NVL GPUs and MIG partitions.
+In this quickstart you walked through an end-to-end GPU booking and scheduling workflow:
 
-**Module 2: GPU Booking App** +
-Used the OpenShift Console plugin to reserve GPU time slots and observed the Kueue resources created by the reservation sync.
+**Configured a GPU profile** +
+Deployed the NVIDIA GB200 NVL profile via the GPU Config plugin, making simulated GPU resources available to your tenant.
 
-**Module 3: RHOAI Hardware Profiles** +
-Connected GPU reservations to OpenShift AI workbenches through Hardware Profiles and launched a GPU-enabled workbench.
+**Deployed an unreserved workload** +
+Launched a GPU workload via the unreserved queue and observed it consuming all available GPU slots.
 
-**Module 4: Kueue Concepts** +
-Explored ClusterQueues, Cohorts, ResourceFlavors, and traced workloads through the Kueue admission process.
+**Reserved GPUs through the booking app** +
+Used the GPU Booking console plugin to reserve GPU time slots for your tenant, creating Kueue ClusterQueues and Hardware Profiles automatically.
 
-**Module 5: Preemption Testing** +
-Simulated multi-user GPU contention and observed reserved workloads preempting unreserved ones -- with both full GPUs and MIG partitions.
+**Triggered preemption** +
+Launched an RHOAI workbench using your reserved Hardware Profile and watched Kueue preempt the unreserved workload to honour your guaranteed allocation.
 
-== Key takeaways
+== Key Concepts Demonstrated
 
-**GPU Simulation** +
-The fake-gpu-operator provides a complete GPU simulation layer for development and testing without hardware cost. Everything from device plugin registration to nvidia-smi emulation works identically to real GPUs from Kubernetes' perspective.
+**Multi-tenant GPU isolation** +
+Each tenant (`{tenant}`) has its own Kueue Cohort, ClusterQueues, and namespace prefix — bookings and workloads are fully isolated between tenants.
 
-**Resource Booking** +
-The GPU Booking App bridges calendar-based scheduling and Kubernetes resource management. Users book GPU time through a familiar interface while the system creates Kueue resources behind the scenes.
+**Fair sharing with preemption** +
+Unreserved workloads can use all available GPUs, but reserved users reclaim their allocation instantly through Kueue's `reclaimWithinCohort: Any` preemption policy.
 
-**Fair Sharing with Preemption** +
-Kueue's Cohort model enables fair resource sharing: unreserved workloads can use all available GPUs, but reserved users can reclaim their allocation instantly through preemption.
+**Calendar-based scheduling meets Kubernetes** +
+The GPU Booking App bridges familiar time-slot reservation with Kubernetes resource management — users book through a console UI while the system manages Kueue resources behind the scenes.
 
-**Platform Integration** +
-Hardware Profiles connect the booking system to RHOAI's workbench experience, letting data scientists select GPU types without needing to understand Kueue internals.
+**Simulated GPUs, real scheduling** +
+The fake-gpu-operator provides a complete GPU simulation layer. Everything from device plugin registration to MIG partitioning works identically to real hardware from Kubernetes' perspective.
 
 == Resources
 
@@ -43,4 +42,4 @@ Hardware Profiles connect the booking system to RHOAI's workbench experience, le
 
 == Thank you
 
-Thank you for participating in this workshop. We hope you now have a solid understanding of GPU resource management patterns on OpenShift and can apply these concepts to your own GPU infrastructure.
+Thank you for running through this demo. We hope it gives you a clear picture of how GPU resource management, fair sharing, and preemption work together on OpenShift.
