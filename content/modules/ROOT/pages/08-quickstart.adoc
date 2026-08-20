@@ -67,6 +67,17 @@ The GPU profile is managed centrally via GitOps. The **Deploy** button is read-o
 
 === Verify GPU resources on the cluster
 
+[IMPORTANT]
+====
+**Acting as: `{user-admin}`** +
+Log in to the OpenShift CLI:
+
+[source,console,role=execute,subs=attributes+]
+----
+oc login --insecure-skip-tls-verify $(oc whoami --show-server) -u {user-admin} -p {password}
+----
+====
+
 . From the terminal, confirm GPU resources are available:
 +
 [source,console,role=execute,subs=attributes+]
