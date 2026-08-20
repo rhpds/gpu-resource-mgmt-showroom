@@ -14,7 +14,7 @@ The follow on Modules explore the individual components in more detail.
 
 By the end of this quickstart, you'll be able to:
 
-* Configure and deploy a GPU profile using the GPU Config console plugin
+* Verify the pre-configured NVIDIA GB200 NVL GPU profile using the GPU Config console plugin
 * Deploy unreserved GPU workloads via Helm
 * Create a GPU reservation through the booking app
 * Launch an RHOAI workbench using a reserved Hardware Profile
@@ -31,7 +31,7 @@ This walkthrough uses three user identities:
 
 | `{user-admin}`
 | Cluster admin
-| Configures the GPU profile, discovers GPUs, sets up the environment
+| Verifies the GPU profile, checks GPU resources, sets up the environment
 
 | `{user-user1}`
 | Regular user
@@ -42,9 +42,9 @@ This walkthrough uses three user identities:
 | Reserves a GPU, creates an RHOAI workbench, triggers preemption of {user-user1}'s workload
 |===
 
-NOTE: This quickstart is using the **NVIDIA GB200 NVL** profile. You may use other profiles if you wish - however you will need to adjust the commands accordingly. Don't worry if the images in this quickstart do not match exactly your GPU profile. The number of GPUs may be slightly different in the images depending on the profile you deploy and number of nodes in the cluster. Remember the GPUs are all simulated in this workshop!
+NOTE: This quickstart uses the **NVIDIA GB200 NVL** profile which is pre-configured on the cluster. The GPU resources are all simulated — the number of GPUs shown may differ slightly from the screenshots but the workflow is identical.
 
-== Exercise 1: Configure GPU profile (Admin)
+== Exercise 1: Verify GPU profile (Admin)
 
 [IMPORTANT]
 ====
@@ -52,37 +52,35 @@ NOTE: This quickstart is using the **NVIDIA GB200 NVL** profile. You may use oth
 Log in to the OpenShift Console at `{openshift_console_url}` with username `{user-admin}` and password `{password}`.
 ====
 
-=== Deploy the NVIDIA GB200 NVL profile
+=== View the active GPU profile
 
 . In the OpenShift Console, navigate to **GPU Config > GPU Profiles** in the left navigation menu.
 
-. Select the **NVIDIA GB200 NVL** profile card.
+. Observe that the **NVIDIA GB200 NVL** profile card is marked **Active** -- it was pre-deployed for your tenant `{tenant}` as part of the cluster setup.
 
-. Select **one** of the three cluster nodes in the **GPU Target Node** selection box.
+image::qs-gpu-config-gb200.png[GPU Config plugin showing GB200 NVL profile active,link=self,window=blank,width=700]
+
+[NOTE]
+====
+The GPU profile is managed centrally via GitOps. The **Deploy** button is read-only for tenant admins -- GPU profile changes are controlled by the cluster platform team to ensure consistent resource allocation across all tenants.
+====
+
+=== Verify GPU resources on the cluster
+
+. From the terminal, confirm GPU resources are available:
 +
-image::gpu-node-picker.png[GPU Node Picker,link=self,window=blank,width=700]
+[source,console,role=execute,subs=attributes+]
+----
+oc describe node -l nvidia.com/gpu.present=true | grep -A 10 "Allocatable:"
+----
 +
-NOTE: You can select more than one node to deploy the GPU profile to. For this workshop you should only select **one node** as the examples are tailored to target a single GPU node only.
-
-. Click **Deploy** to apply the GPU profile to the cluster.
-
-image::qs-gpu-config-gb200.png[GPU Config plugin showing GB200 NVL profile selected,link=self,window=blank,width=700]
-
-. Wait for the deployment to complete. The status panel will show the progress of node labeling and operator restart.
-
-image::qs-gpu-config-deployed.png[GPU Config showing successful deployment,link=self,window=blank,width=700]
-
-=== Discover GPUs
-
-. Navigate to **GPU Booking** > **Administration** in the console menu.
-
-. Click **Discover GPUs** to detect the newly configured GPU resources.
-
-image::qs-discover-gpus.png[GPU Booking Administration after discovering GPUs,link=self,window=blank,width=700]
+You should see `nvidia.com/gpu`, `nvidia.com/mig-1g.23gb`, and other GB200 NVL MIG slice types listed as allocatable.
 
 === Verify empty bookings
 
 . Navigate to **GPU Booking** > **Bookings**.
+
+. Select your tenant **`{tenant}`** from the tenant dropdown.
 
 . Observe the empty topology usage overview -- no workloads are consuming GPUs yet.
 
@@ -90,9 +88,9 @@ image::qs-empty-bookings.png[GPU Booking showing empty topology,link=self,window
 
 === Verify
 
-&#10003; GB200 NVL GPU profile deployed successfully +
-&#10003; GPUs discovered in the booking administration panel +
-&#10003; Bookings page shows empty topology
+&#10003; NVIDIA GB200 NVL GPU profile is active on the cluster +
+&#10003; GPU resources visible in node allocatable +
+&#10003; Bookings page shows empty topology for your tenant
 
 == Exercise 2: Deploy an unreserved workload ({user-user1})
 
@@ -482,7 +480,7 @@ persistentvolumeclaim "fake-gpu-workbench-storage" deleted
 
 **What you accomplished:**
 
-* Configured the NVIDIA GB200 NVL GPU profile as a cluster administrator
+* Verified the pre-configured NVIDIA GB200 NVL GPU profile
 * Deployed an unreserved GPU workload consuming all available GPUs
 * Created a GPU reservation and launched an RHOAI workbench with a reserved Hardware Profile
 * Observed Kueue preemption in action -- reserved workloads automatically evict unreserved ones
